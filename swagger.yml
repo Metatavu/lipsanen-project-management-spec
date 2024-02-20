@@ -21,3 +21,24 @@ paths:
             text/plain:
               schema:
                 type: string
+
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  schemas:
+    Error:
+      type: object
+      description: Error object
+      required:
+        - code
+        - message
+      properties:
+        status:
+          type: integer
+          format: int32
+        message:
+          type: string

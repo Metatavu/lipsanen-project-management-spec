@@ -21,6 +21,146 @@ paths:
             text/plain:
               schema:
                 type: string
+  /v1/projects/import:
+    post:
+      operationId: importXml
+      summary: Import XML file from Aikataulu
+      description: Import XML file from Aikataulu
+      tags:
+        - Projects
+      requestBody:
+        content:
+          application/xml:
+            schema:
+              type: string
+              format: binary
+      responses:
+        "200":
+          description: List of projects
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Project'
+  /v1/projects:
+    get:
+      operationId: listProjects
+      summary: Get all projects
+      description: Get all projects
+      tags:
+        - Projects
+      responses:
+        "200":
+          description: List of projects
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Project'
+    post:
+      operationId: createProject
+      summary: Create a new project
+      description: Create a new project
+      tags:
+        - Projects
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Project'
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Project'
+  /v1/projects/{projectId}:
+    get:
+      operationId: findProject
+      summary: Get a project
+      description: Get a project
+      tags:
+        - Projects
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: Project
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Project'
+    put:
+      operationId: updateProject
+      summary: Update a project
+      description: Update a project
+      tags:
+        - Projects
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Project'
+      responses:
+        "200":
+          description: Updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Project'
+    delete:
+      operationId: deleteProject
+      summary: Delete a project
+      description: Delete a project
+      tags:
+        - Projects
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "204":
+          description: No content
+  /v1/projects/{projectId}/export:
+    get:
+      operationId: exportProject
+      summary: Exports project to tocoman xml file
+      description: Get a project
+      tags:
+        - Projects
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: Project
+          content:
+            application/xml:
+              schema:
+                type: string
+                format: binary
 
 components:
   securitySchemes:
@@ -42,3 +182,49 @@ components:
           format: int32
         message:
           type: string
+
+    Project:
+      type: object
+      description: Project object
+      required:
+        - name
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        tocomanId:
+          type: integer
+        metadata:
+          $ref: '#/components/schemas/Metadata'
+
+    Task:
+      type: object
+      description: Task object
+      properties:
+        tocomanId:
+          type: integer
+        name:
+          type: string
+
+    Metadata:
+      type: object
+      description: Error object
+      properties:
+        creatorId:
+          type: string
+          readOnly: true
+          format: uuid
+        createdAt:
+          format: date-time
+          type: string
+          readOnly: true
+        lastModifierId:
+          type: string
+          readOnly: true
+          format: uuid
+        modifiedAt:
+          format: date-time
+          type: string
+          readOnly: true

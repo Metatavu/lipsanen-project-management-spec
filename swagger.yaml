@@ -142,7 +142,7 @@ paths:
   /v1/projects/{projectId}/export:
     get:
       operationId: exportProject
-      summary: Exports project to tocoman xml file
+      summary: Exports project to Tocoman xml file
       description: Get a project
       tags:
         - Projects

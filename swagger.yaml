@@ -375,8 +375,8 @@ components:
       type: object
       description: User object
       required:
-          - firstName
-          - lastName
+        - firstName
+        - lastName
       properties:
         id:
           type: string

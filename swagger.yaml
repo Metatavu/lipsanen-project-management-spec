@@ -54,6 +54,17 @@ paths:
       description: Get all projects
       tags:
         - Projects
+      parameters:
+        - name: first
+          in: query
+          description: First result.
+          schema:
+            type: integer
+        - name: max
+          in: query
+          description: Max results.
+          schema:
+            type: integer
       responses:
         "200":
           description: List of projects
@@ -211,6 +222,17 @@ paths:
       description: Get all users
       tags:
         - Users
+      parameters:
+        - name: first
+          in: query
+          description: First result.
+          schema:
+            type: integer
+        - name: max
+          in: query
+          description: Max results.
+          schema:
+            type: integer
       responses:
         "200":
           description: List of users

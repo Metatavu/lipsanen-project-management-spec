@@ -41,6 +41,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Project'
+        "default":
+          description: Invalid request was sent to the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
   /v1/projects:
     get:
       operationId: listProjects
@@ -57,6 +63,12 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Project'
+        "default":
+          description: Invalid request was sent to the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
     post:
       operationId: createProject
       summary: Create a new project
@@ -76,6 +88,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Project'
+        "default":
+          description: Invalid request was sent to the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
   /v1/projects/{projectId}:
     get:
       operationId: findProject
@@ -97,6 +115,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Project'
+        "default":
+          description: Invalid request was sent to the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
     put:
       operationId: updateProject
       summary: Update a project
@@ -123,6 +147,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Project'
+        "default":
+          description: Invalid request was sent to the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
     delete:
       operationId: deleteProject
       summary: Delete a project
@@ -139,6 +169,12 @@ paths:
       responses:
         "204":
           description: No content
+        "default":
+          description: Invalid request was sent to the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
   /v1/projects/{projectId}/export:
     get:
       operationId: exportProject
@@ -161,6 +197,142 @@ paths:
               schema:
                 type: string
                 format: binary
+        "default":
+          description: Invalid request was sent to the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /v1/users:
+    get:
+      operationId: listUsers
+      summary: Get all users
+      description: Get all users
+      tags:
+        - Users
+      responses:
+        "200":
+          description: List of users
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+        "default":
+          description: Invalid request was sent to the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    post:
+      operationId: createUser
+      summary: Create a new user
+      description: Create a new user
+      tags:
+        - Users
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        "200":
+          description: Created user
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        "default":
+          description: Invalid request was sent to the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /v1/users/{userId}:
+    get:
+      operationId: findUser
+      summary: Get a user
+      description: Get a user
+      tags:
+      - Users
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: User
+          content:
+            application/json:
+              schema:
+              $ref: '#/components/schemas/User'
+        "default":
+          description: Invalid request was sent to the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    put:
+      operationId: updateUser
+      summary: Update a user
+      description: Update a user
+      tags:
+      - Users
+      parameters:
+      - name: userId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        "200":
+          description: Updated
+          content:
+            application/json:
+              schema:
+              $ref: '#/components/schemas/User'
+        "default":
+          description: Invalid request was sent to the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    delete:
+      operationId: deleteUser
+      summary: Delete a user
+      description: Delete a user
+      tags:
+      - Users
+      parameters:
+      - name: userId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      responses:
+        "204":
+          description: No content
+        "default":
+          description: Invalid request was sent to the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
 
 components:
   securitySchemes:
@@ -198,6 +370,36 @@ components:
           type: integer
         metadata:
           $ref: '#/components/schemas/Metadata'
+
+    User:
+      type: object
+      description: User object
+      required:
+          - firstName
+          - lastName
+      properties:
+        firstName:
+          type: string
+        lastName:
+          type: string
+        role:
+          $ref: '#/components/schemas/UserRole'
+        company:
+          type: string
+        lastLoggedIn:
+          format: date-time
+          type: string
+
+    UserRole:
+      type: object
+      description: User role object
+      properties:
+        role:
+          type: string
+          enum:
+            - CUSTOMER
+            - WORKER
+            - DESIGNER
 
     Metadata:
       type: object

@@ -399,6 +399,7 @@ components:
       required:
         - firstName
         - lastName
+        - email
       properties:
         id:
           type: string
@@ -407,23 +408,13 @@ components:
           type: string
         lastName:
           type: string
-        role:
-          $ref: '#/components/schemas/UserRole'
+        email:
+          type: string
         company:
           type: string
         lastLoggedIn:
           format: date-time
           type: string
-
-    UserRole:
-      type: object
-      description: User role object
-      properties:
-        role:
-          type: string
-          enum:
-            - worker
-            - designer
 
     Metadata:
       type: object

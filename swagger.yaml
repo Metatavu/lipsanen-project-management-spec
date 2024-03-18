@@ -257,7 +257,7 @@ paths:
       summary: Get a user
       description: Get a user
       tags:
-      - Users
+        - Users
       parameters:
         - name: userId
           in: path
@@ -283,14 +283,14 @@ paths:
       summary: Update a user
       description: Update a user
       tags:
-      - Users
+        - Users
       parameters:
-      - name: userId
-        in: path
-        required: true
-        schema:
-          type: string
-          format: uuid
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
       requestBody:
         required: true
         content:
@@ -315,14 +315,14 @@ paths:
       summary: Delete a user
       description: Delete a user
       tags:
-      - Users
+        - Users
       parameters:
-      - name: userId
-        in: path
-        required: true
-        schema:
-          type: string
-          format: uuid
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
       responses:
         "204":
           description: No content

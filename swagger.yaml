@@ -422,9 +422,8 @@ components:
         role:
           type: string
           enum:
-            - CUSTOMER
-            - WORKER
-            - DESIGNER
+            - worker
+            - designer
 
     Metadata:
       type: object

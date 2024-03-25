@@ -415,6 +415,12 @@ components:
         lastLoggedIn:
           format: date-time
           type: string
+        projectIds:
+          description: List of project ids that the user belongs to
+          type: array
+          items:
+            type: string
+            format: uuid
 
     Metadata:
       type: object

@@ -394,6 +394,7 @@ components:
       description: Project object
       required:
         - name
+        - status
       properties:
         id:
           type: string

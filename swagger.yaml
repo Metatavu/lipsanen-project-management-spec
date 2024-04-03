@@ -376,12 +376,25 @@ components:
           format: int32
         message:
           type: string
+          
+    ProjectStatus:
+      type: string
+      description: Project status
+      enum:
+        - INITIATION
+        - PLANNING
+        - DESIGN
+        - PROCUREMENT
+        - CONSTRUCTION
+        - INSPECTION
+        - COMPLETION
 
     Project:
       type: object
       description: Project object
       required:
         - name
+        - status
       properties:
         id:
           type: string
@@ -390,6 +403,8 @@ components:
           type: string
         tocomanId:
           type: integer
+        status:
+          $ref: '#/components/schemas/ProjectStatus'
         metadata:
           $ref: '#/components/schemas/Metadata'
 

@@ -533,8 +533,9 @@ components:
           type: string
         email:
           type: string
-        company:
-          $ref: '#/components/schemas/Company'
+        companyId:
+          format: uuid
+          type: string
         lastLoggedIn:
           format: date-time
           type: string

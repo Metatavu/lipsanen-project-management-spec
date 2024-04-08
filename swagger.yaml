@@ -223,6 +223,12 @@ paths:
       tags:
         - Users
       parameters:
+        - name: companyId
+          in: query
+          description: Company id
+          schema:
+            type: string
+            format: uuid
         - name: first
           in: query
           description: First result.
@@ -355,6 +361,114 @@ paths:
               schema:
                 $ref: "#/components/schemas/Error"
 
+  /v1/companies:
+    get:
+      operationId: listCompanies
+      summary: Get all companies
+      description: Get all companies
+      tags:
+        - Companies
+      parameters:
+        - name: first
+          in: query
+          description: First result.
+          schema:
+            type: integer
+        - name: max
+          in: query
+          description: Max results.
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: List of companies
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Company'
+        "default":
+          description: Invalid request was sent to the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    post:
+      operationId: createCompany
+      summary: Create a new company
+      description: Create a new company
+      tags:
+        - Companies
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Company'
+      responses:
+        "200":
+          description: Created company
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Company'
+        "default":
+          description: Invalid request was sent to the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /v1/companies/{companyId}:
+    get:
+      operationId: findCompany
+      summary: Get a company
+      description: Get a company
+      tags:
+        - Companies
+      parameters:
+        - name: companyId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: Company
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Company'
+        "default":
+          description: Invalid request was sent to the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    delete:
+      operationId: deleteCompany
+      summary: Delete a company
+      description: Delete a company
+      tags:
+        - Companies
+      parameters:
+        - name: companyId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "204":
+          description: No content
+        "default":
+          description: Invalid request was sent to the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
 
 components:
   securitySchemes:
@@ -425,7 +539,8 @@ components:
           type: string
         email:
           type: string
-        company:
+        companyId:
+          format: uuid
           type: string
         lastLoggedIn:
           format: date-time
@@ -436,6 +551,20 @@ components:
           items:
             type: string
             format: uuid
+
+    Company:
+      type: object
+      description: Company object
+      required:
+        - name
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        metadata:
+          $ref: '#/components/schemas/Metadata'
 
     Metadata:
       type: object

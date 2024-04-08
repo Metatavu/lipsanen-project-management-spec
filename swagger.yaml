@@ -718,7 +718,7 @@ components:
         metadata:
           $ref: '#/components/schemas/Metadata'
 
-    Theme:
+    ProjectTheme:
       type: object
       description: Theme object
       properties:

@@ -217,8 +217,8 @@ paths:
   /v1/projects/{projectId}/themes:
     get:
       operationId: listProjectThemes
-      summary: List project themes
-      description: List project themes, expected to return list of 0 or 1 elements
+      summary: Get all projects themes
+      description: Get all projects themes, expected to be a list of 0 or 1 items
       tags:
         - ProjectThemes
       parameters:
@@ -230,12 +230,13 @@ paths:
             format: uuid
       responses:
         "200":
-          description: ProjectTheme
-          application/json:
-            schema:
-              type: array
-              items:
-                $ref: '#/components/schemas/ProjectTheme'
+          description: List of Project Themes
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ProjectTheme'
         "default":
           description: Invalid request was sent to the server
           content:
@@ -244,10 +245,17 @@ paths:
                 $ref: "#/components/schemas/Error"
     post:
       operationId: createProjectTheme
-      summary: Create a new ProjectTheme
-      description: Create a new ProjectTheme
+      summary: Create a new Project Theme
+      description: Create a new Project Theme
       tags:
         - ProjectThemes
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
       requestBody:
         required: true
         content:
@@ -322,22 +330,22 @@ paths:
       requestBody:
         required: true
         content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ProjectTheme'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProjectTheme'
       responses:
         "200":
           description: Updated
           content:
-              application/json:
+            application/json:
               schema:
-                  $ref: '#/components/schemas/ProjectTheme'
+                $ref: '#/components/schemas/ProjectTheme'
         "default":
           description: Invalid request was sent to the server
           content:
-              application/json:
+            application/json:
               schema:
-                  $ref: "#/components/schemas/Error"
+                $ref: "#/components/schemas/Error"
     delete:
       operationId: deleteProjectTheme
       summary: Delete a project theme

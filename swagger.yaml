@@ -729,10 +729,14 @@ components:
     ProjectTheme:
       type: object
       description: Theme object
+      required:
+        - themeColor
+        - logoUrl
       properties:
         id:
           type: string
           format: uuid
+          readOnly: true
         themeColor:
           type: string
           description: Theme color code

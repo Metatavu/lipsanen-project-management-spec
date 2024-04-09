@@ -214,6 +214,166 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Error"
+  /v1/projects/{projectId}/themes:
+    get:
+      operationId: listProjectThemes
+      summary: Get all projects themes
+      description: Get all projects themes, expected to be a list of 0 or 1 items
+      tags:
+        - ProjectThemes
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: List of Project Themes
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ProjectTheme'
+        "default":
+          description: Invalid request was sent to the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    post:
+      operationId: createProjectTheme
+      summary: Create a new Project Theme
+      description: Create a new Project Theme
+      tags:
+        - ProjectThemes
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProjectTheme'
+      responses:
+        "200":
+          description: Created Project Theme
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProjectTheme'
+        "default":
+          description: Invalid request was sent to the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /v1/projects/{projectId}/themes/{themeId}:
+    get:
+      operationId: findProjectTheme
+      summary: Get a project theme
+      description: Get a project theme
+      tags:
+        - ProjectThemes
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: themeId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: ProjectTheme
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProjectTheme'
+        "default":
+          description: Invalid request was sent to the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    put:
+      operationId: updateProjectTheme
+      summary: Update a project theme
+      description: Update a project theme
+      tags:
+        - ProjectThemes
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: themeId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProjectTheme'
+      responses:
+        "200":
+          description: Updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProjectTheme'
+        "default":
+          description: Invalid request was sent to the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    delete:
+      operationId: deleteProjectTheme
+      summary: Delete a project theme
+      description: Delete a project theme
+      tags:
+        - ProjectThemes
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: themeId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "204":
+          description: No content
+        "default":
+          description: Invalid request was sent to the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
 
   /v1/users:
     get:
@@ -563,6 +723,26 @@ components:
           format: uuid
         name:
           type: string
+        metadata:
+          $ref: '#/components/schemas/Metadata'
+
+    ProjectTheme:
+      type: object
+      description: Theme object
+      required:
+        - themeColor
+        - logoUrl
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        themeColor:
+          type: string
+          description: Theme color code
+        logoUrl:
+          type: string
+          format: url
         metadata:
           $ref: '#/components/schemas/Metadata'
 

@@ -21,284 +21,6 @@ paths:
             text/plain:
               schema:
                 type: string
-  /v1/milestones:
-    get:
-    operationId: listMilestones
-    summary: Get all milestones
-    description: Get all milestones
-    tags:
-      - Milestones
-    parameters:
-      - name: first
-        in: query
-        description: First result.
-        schema:
-          type: integer
-      - name: max
-        in: query
-        description: Max results.
-        schema:
-          type: integer
-    responses:
-      "200":
-        description: List of milestones
-        content:
-          application/json:
-            schema:
-              type: array
-              items:
-                $ref: '#/components/schemas/Milestone'
-      "default":
-        description: Invalid request was sent to the server
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/Error"
-    post:
-      operationId: createMilestone
-      summary: Create a new milestone
-      description: Create a new milestone
-      tags:
-        - Milestones
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Milestone'
-      responses:
-        "200":
-          description: Created milestone
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Milestone'
-        "default":
-          description: Invalid request was sent to the server
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
-  /v1/milestones/{milestoneId}:
-    get:
-      operationId: findMilestone
-      summary: Get a milestone
-      description: Get a milestone
-      tags:
-        - Milestones
-      parameters:
-        - name: milestoneId
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
-      responses:
-        "200":
-          description: Milestone
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Milestone'
-        "default":
-          description: Invalid request was sent to the server
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
-    put:
-      operationId: updateMilestone
-      summary: Update a milestone
-      description: Update a milestone
-      tags:
-        - Milestones
-      parameters:
-        - name: milestoneId
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Milestone'
-      responses:
-        "200":
-          description: Updated Milestone
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Milestone'
-        "default":
-          description: Invalid request was sent to the server
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
-    delete:
-      operationId: deleteMilestone
-      summary: Delete a milestone
-      description: Delete a milestone
-      tags:
-        - Milestones
-      parameters:
-        - name: milestoneId
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
-      responses:
-        "204":
-          description: No content
-        "default":
-          description: Invalid request was sent to the server
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
-  /v1/tasks:
-    get:
-      operationId: listTasks
-      summary: Get all tasks
-      description: Get all tasks
-      tags:
-        - Tasks
-      parameters:
-        - name: first
-          in: query
-          description: First result.
-          schema:
-            type: integer
-        - name: max
-          in: query
-          description: Max results.
-          schema:
-            type: integer
-      responses:
-        "200":
-          description: List of tasks
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Task'
-        "default":
-          description: Invalid request was sent to the server
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
-    post:
-      operationId: createTask
-      summary: Create a new task
-      description: Create a new task
-      tags:
-        - Tasks
-      requestBody:
-        required: true
-        content:
-        application/json:
-          schema:
-          $ref: '#/components/schemas/Task'
-      responses:
-        "200":
-          description: Created task
-          content:
-            application/json:
-            schema:
-              $ref: '#/components/schemas/Task'
-        "default":
-          description: Invalid request was sent to the server
-          content:
-            application/json:
-            schema:
-              $ref: "#/components/schemas/Error"
-  /v1/tasks/{taskId}:
-    get:
-      operationId: findTask
-      summary: Get a task
-      description: Get a task
-      tags:
-        - Tasks
-      parameters:
-        - name: taskId
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
-      responses:
-        "200":
-          description: Task
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Task'
-        "default":
-          description: Invalid request was sent to the server
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
-    put:
-      operationId: updateTask
-      summary: Update a task
-      description: Update a task
-      tags:
-        - Tasks
-      parameters:
-        - name: taskId
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Task'
-      responses:
-        "200":
-          description: Updated Task
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Task'
-        "default":
-          description: Invalid request was sent to the server
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
-    delete:
-      operationId: deleteTask
-      summary: Delete a task
-      description: Delete a task
-      tags:
-        - Tasks
-      parameters:
-        - name: taskId
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
-      responses:
-        "204":
-          description: No content
-        "default":
-          description: Invalid request was sent to the server
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
 
   /v1/projects/import:
     post:
@@ -639,6 +361,167 @@ paths:
             type: string
             format: uuid
         - name: themeId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "204":
+          description: No content
+        "default":
+          description: Invalid request was sent to the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /v1/projects/{projectId}/milestones:
+    get:
+      operationId: listProjectMilestones
+      summary: Get all project milestones
+      description: Get all project milestones
+      tags:
+        - ProjectMilestones
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: List of project milestones
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Milestone'
+        "default":
+          description: Invalid request was sent to the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    post:
+      operationId: createProjectMilestone
+      summary: Create a new project milestone
+      description: Create a new project milestone
+      tags:
+        - ProjectMilestones
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Milestone'
+      responses:
+        "200":
+          description: Created project milestone
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Milestone'
+        "default":
+          description: Invalid request was sent to the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /v1/projects/{projectId}/milestones/{milestoneId}:
+    get:
+      operationId: findProjectMilestone
+      summary: Get a project milestone
+      description: Get a project milestone
+      tags:
+        - ProjectMilestones
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: milestoneId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: Project Milestone
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Milestone'
+        "default":
+          description: Invalid request was sent to the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    put:
+      operationId: updateProjectMilestone
+      summary: Update a project milestone
+      description: Update a project milestone
+      tags:
+        - ProjectMilestones
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: milestoneId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Milestone'
+      responses:
+        "200":
+          description: Updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Milestone'
+        "default":
+          description: Invalid request was sent to the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    delete:
+      operationId: deleteProjectMilestone
+      summary: Delete a project milestone
+      description: Delete a project milestone
+      tags:
+        - ProjectMilestones
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: milestoneId
           in: path
           required: true
           schema:
@@ -1032,7 +915,6 @@ components:
         - name
         - startDate
         - endDate
-        - milestoneId
       properties:
         id:
           type: string

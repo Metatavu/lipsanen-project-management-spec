@@ -79,87 +79,87 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Error"
-    /v1/milestones/{milestoneId}:
-      get:
-        operationId: findMilestone
-        summary: Get a milestone
-        description: Get a milestone
-        tags:
-          - Milestones
-        parameters:
-          - name: milestoneId
-            in: path
-            required: true
-            schema:
-              type: string
-              format: uuid
-        responses:
-          "200":
-            description: Milestone
-            content:
-              application/json:
-                schema:
-                  $ref: '#/components/schemas/Milestone'
-          "default":
-            description: Invalid request was sent to the server
-            content:
-              application/json:
-                schema:
-                  $ref: "#/components/schemas/Error"
-      put:
-        operationId: updateMilestone
-        summary: Update a milestone
-        description: Update a milestone
-        tags:
-          - Milestones
-        parameters:
-          - name: milestoneId
-            in: path
-            required: true
-            schema:
-              type: string
-              format: uuid
-        requestBody:
+  /v1/milestones/{milestoneId}:
+    get:
+      operationId: findMilestone
+      summary: Get a milestone
+      description: Get a milestone
+      tags:
+        - Milestones
+      parameters:
+        - name: milestoneId
+          in: path
           required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: Milestone
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Milestone'
-        responses:
-          "200":
-            description: Updated Milestone
-            content:
-              application/json:
-                schema:
-                  $ref: '#/components/schemas/Milestone'
-          "default":
-            description: Invalid request was sent to the server
-            content:
-              application/json:
-                schema:
-                  $ref: "#/components/schemas/Error"
-      delete:
-        operationId: deleteMilestone
-        summary: Delete a milestone
-        description: Delete a milestone
-        tags:
-          - Milestones
-        parameters:
-          - name: milestoneId
-            in: path
-            required: true
+        "default":
+          description: Invalid request was sent to the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    put:
+      operationId: updateMilestone
+      summary: Update a milestone
+      description: Update a milestone
+      tags:
+        - Milestones
+      parameters:
+        - name: milestoneId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
             schema:
-              type: string
-              format: uuid
-        responses:
-          "204":
-            description: No content
-          "default":
-            description: Invalid request was sent to the server
-            content:
-              application/json:
-                schema:
-                  $ref: "#/components/schemas/Error"
+              $ref: '#/components/schemas/Milestone'
+      responses:
+        "200":
+          description: Updated Milestone
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Milestone'
+        "default":
+          description: Invalid request was sent to the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    delete:
+      operationId: deleteMilestone
+      summary: Delete a milestone
+      description: Delete a milestone
+      tags:
+        - Milestones
+      parameters:
+        - name: milestoneId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "204":
+          description: No content
+        "default":
+          description: Invalid request was sent to the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
   /v1/projects/import:
     post:
       operationId: importXml

@@ -888,6 +888,11 @@ components:
     Milestone:
       type: object
       description: milestone
+      required:
+        - name
+        - startDate
+        - endDate
+        - milestoneId
       properties:
         id:
           type: string
@@ -903,6 +908,64 @@ components:
           type: string
         metadata:
           $ref: '#/components/schemas/Metadata'
+
+
+    Task:
+      type: object
+      description: milestone
+      required:
+        - name
+        - startDate
+        - endDate
+        - milestoneId
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        name:
+          type: string
+        startDate:
+          format: date
+          type: string
+        endDate:
+          format: date
+          type: string
+        milestoneId:
+          type: string
+          format: uuid
+        metadata:
+          $ref: '#/components/schemas/Metadata'
+
+    TaskConnection:
+      type: object
+      description: Task connection
+      required:
+        - fromTaskId
+        - toTaskId
+        - type
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        fromTaskId:
+          type: string
+          format: uuid
+        toTaskId:
+          type: string
+          format: uuid
+        type:
+          $ref: '#/components/schemas/TaskConnectionType'
+        metadata:
+          $ref: '#/components/schemas/Metadata'
+
+    TaskConnectionType:
+      type: string
+      description: Task connection type
+      enum:
+        - FINISH_TO_START
+        - START_TO_START
 
     Metadata:
       type: object

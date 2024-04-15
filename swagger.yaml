@@ -160,6 +160,146 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Error"
+  /v1/tasks:
+    get:
+      operationId: listTasks
+      summary: Get all tasks
+      description: Get all tasks
+      tags:
+        - Tasks
+      parameters:
+        - name: first
+          in: query
+          description: First result.
+          schema:
+            type: integer
+        - name: max
+          in: query
+          description: Max results.
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: List of tasks
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Task'
+        "default":
+          description: Invalid request was sent to the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    post:
+      operationId: createTask
+      summary: Create a new task
+      description: Create a new task
+      tags:
+        - Tasks
+      requestBody:
+        required: true
+        content:
+        application/json:
+          schema:
+          $ref: '#/components/schemas/Task'
+      responses:
+        "200":
+          description: Created task
+          content:
+            application/json:
+            schema:
+              $ref: '#/components/schemas/Task'
+        "default":
+          description: Invalid request was sent to the server
+          content:
+            application/json:
+            schema:
+              $ref: "#/components/schemas/Error"
+  /v1/tasks/{taskId}:
+    get:
+      operationId: findTask
+      summary: Get a task
+      description: Get a task
+      tags:
+        - Tasks
+      parameters:
+        - name: taskId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: Task
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Task'
+        "default":
+          description: Invalid request was sent to the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    put:
+      operationId: updateTask
+      summary: Update a task
+      description: Update a task
+      tags:
+        - Tasks
+      parameters:
+        - name: taskId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Task'
+      responses:
+        "200":
+          description: Updated Task
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Task'
+        "default":
+          description: Invalid request was sent to the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    delete:
+      operationId: deleteTask
+      summary: Delete a task
+      description: Delete a task
+      tags:
+        - Tasks
+      parameters:
+        - name: taskId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "204":
+          description: No content
+        "default":
+          description: Invalid request was sent to the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
   /v1/projects/import:
     post:
       operationId: importXml
@@ -928,9 +1068,11 @@ components:
         startDate:
           format: date
           type: string
+          description: Can be edited only within proposal
         endDate:
           format: date
           type: string
+          description: Can be edited only within proposal
         milestoneId:
           type: string
           format: uuid

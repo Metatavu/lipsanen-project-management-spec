@@ -727,6 +727,231 @@ paths:
               schema:
                 $ref: "#/components/schemas/Error"
 
+  /v1/projects/{projectId}/milestones/{milestoneId}/tasks/{taskId}/connections:
+    get:
+      operationId: listTaskConnections
+      summary: Get all task connections
+      description: Get all task connections
+      tags:
+        - TaskConnections
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: milestoneId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: taskId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: connectionRole
+          in: query
+          required: false
+          schema:
+            $ref: '#/components/schemas/TaskConnectionRole'
+      responses:
+        "200":
+          description: List of task connections
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TaskConnection'
+        "default":
+          description: Invalid request was sent to the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    post:
+      operationId: createTaskConnection
+      summary: Create a new task connection
+      description: Create a new task connection
+      tags:
+        - Tasks
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: milestoneId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: taskId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TaskConnection'
+      responses:
+        "200":
+          description: Created task connection
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TaskConnection'
+        "default":
+          description: Invalid request was sent to the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /v1/projects/{projectId}/milestones/{milestoneId}/tasks/{taskId}/connections/{connectionId}:
+    get:
+      operationId: findTaskConnection
+      summary: Get a task connection
+      description: Get a task connection
+      tags:
+        - TaskConnections
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: milestoneId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: taskId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: connectionId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: Task Connection
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TaskConnection'
+        "default":
+          description: Invalid request was sent to the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    put:
+      operationId: updateMilestoneTask
+      summary: Update a milestone task
+      description: Update a milestone task
+      tags:
+        - Tasks
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: milestoneId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: taskId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: connectionId
+          in: path
+          required: true
+          schema:
+              type: string
+              format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TaskConnection'
+      responses:
+        "200":
+          description: Updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TaskConnection'
+        "default":
+          description: Invalid request was sent to the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    delete:
+      operationId: deleteTaskConnection
+      summary: Delete a task connection
+      description: Delete a task connection
+      tags:
+        - TaskConnections
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: milestoneId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: taskId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: connectionId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "204":
+          description: No content
+        "default":
+          description: Invalid request was sent to the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
   /v1/users:
     get:
       operationId: listUsers
@@ -1148,16 +1373,6 @@ components:
         milestoneId:
           type: string
           format: uuid
-        sourceConnections:
-          type: array
-          items:
-            $ref: '#/components/schemas/TaskConnection'
-          description: Connections of this task where it acts as the source, can be edited in project planning stage by admin
-        targetConnections:
-          type: array
-          items:
-            $ref: '#/components/schemas/TaskConnection'
-          description: Connections of this task where it acts as the target, can be edited in project planning stage by admin
         status:
           $ref: '#/components/schemas/TaskStatus'
           description: Task status. TaskConnections is taken into account when updating the status
@@ -1194,6 +1409,13 @@ components:
           $ref: '#/components/schemas/TaskConnectionType'
         metadata:
           $ref: '#/components/schemas/Metadata'
+
+    TaskConnectionRole:
+      type: string
+      description: Role of the task in the connection
+      enum:
+        - SOURCE
+        - TARGET
 
     TaskConnectionType:
       type: string

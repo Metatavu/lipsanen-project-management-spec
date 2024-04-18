@@ -1355,6 +1355,7 @@ components:
         - startDate
         - endDate
         - milestoneId
+        - status
       properties:
         id:
           type: string

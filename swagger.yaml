@@ -556,6 +556,16 @@ paths:
           schema:
             type: string
             format: uuid
+        - name: first
+          in: query
+          description: First result.
+          schema:
+            type: integer
+        - name: max
+          in: query
+          description: Max results.
+          schema:
+            type: integer
       responses:
         "200":
           description: List of project milestone tasks

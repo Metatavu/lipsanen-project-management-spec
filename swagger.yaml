@@ -1418,8 +1418,6 @@ components:
           format: uuid
         type:
           $ref: '#/components/schemas/TaskConnectionType'
-        metadata:
-          $ref: '#/components/schemas/Metadata'
 
     TaskConnectionRole:
       type: string

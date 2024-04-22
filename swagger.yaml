@@ -737,7 +737,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/Error"
 
-  /v1/projects/{projectId}/milestones/{milestoneId}/tasks/{taskId}/connections:
+  /v1/projects/{projectId}/connections:
     get:
       operationId: listTaskConnections
       summary: Get all task connections
@@ -746,18 +746,6 @@ paths:
         - TaskConnections
       parameters:
         - name: projectId
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
-        - name: milestoneId
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
-        - name: taskId
           in: path
           required: true
           schema:
@@ -796,18 +784,6 @@ paths:
           schema:
             type: string
             format: uuid
-        - name: milestoneId
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
-        - name: taskId
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
       requestBody:
         required: true
         content:
@@ -827,7 +803,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Error"
-  /v1/projects/{projectId}/milestones/{milestoneId}/tasks/{taskId}/connections/{connectionId}:
+  /v1/projects/{projectId}/connections/{connectionId}:
     get:
       operationId: findTaskConnection
       summary: Get a task connection
@@ -836,18 +812,6 @@ paths:
         - TaskConnections
       parameters:
         - name: projectId
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
-        - name: milestoneId
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
-        - name: taskId
           in: path
           required: true
           schema:
@@ -880,18 +844,6 @@ paths:
         - TaskConnections
       parameters:
         - name: projectId
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
-        - name: milestoneId
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
-        - name: taskId
           in: path
           required: true
           schema:
@@ -930,18 +882,6 @@ paths:
         - TaskConnections
       parameters:
         - name: projectId
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
-        - name: milestoneId
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
-        - name: taskId
           in: path
           required: true
           schema:

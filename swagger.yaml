@@ -751,6 +751,12 @@ paths:
           schema:
             type: string
             format: uuid
+        - name: taskId
+          in: query
+          required: false
+          schema:
+            type: string
+            format: uuid
         - name: connectionRole
           in: query
           required: false

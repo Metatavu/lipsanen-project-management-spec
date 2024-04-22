@@ -1296,7 +1296,6 @@ components:
         metadata:
           $ref: '#/components/schemas/Metadata'
 
-
     Task:
       type: object
       description: milestone

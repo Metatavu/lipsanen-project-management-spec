@@ -1576,19 +1576,16 @@ components:
       type: object
       description: Change proposal
       required:
-        - taskId
-        - date
-        - userId
+        - taskProposal
         - status
       properties:
         id:
           type: string
           format: uuid
           readOnly: true
-        taskId:
-          type: string
-          format: uuid
-          description: The ID of the task associated with this change proposal
+        taskProposal:
+          $ref: '#/components/schemas/TaskProposal'
+          description: The proposed changes to the task
         reason:
           type: string
           description: The reason for the proposed change
@@ -1608,8 +1605,22 @@ components:
         - PENDING
         - APPROVED
         - REJECTED
-        
-    
+
+    TaskProposal:
+      type: object
+      description: Task proposal object (partial task object)
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        startDate:
+          format: date
+          type: string
+        endDate:
+          format: date
+          type: string
+
     TaskConnection:
       type: object
       description: Task connection

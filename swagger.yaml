@@ -833,7 +833,7 @@ paths:
                 $ref: "#/components/schemas/Error"
   /v1/projects/{projectId}/milestones/{milestoneId}/tasks/{taskId}/changeProposals/{changeProposalId}:
     get:
-      operationId: getChangeProposal
+      operationId: findChangeProposal
       summary: Get a specific change proposal for a milestone task
       description: Get a specific change proposal for a milestone task
       tags:

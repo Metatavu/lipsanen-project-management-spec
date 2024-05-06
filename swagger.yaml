@@ -742,7 +742,7 @@ paths:
       summary: Get all change proposals for a milestone task
       description: Get all change proposals for a milestone task
       tags:
-        - Change Proposals
+        - ChangeProposals
       parameters:
         - name: projectId
           in: path
@@ -792,7 +792,7 @@ paths:
       summary: Create a new change proposal for a milestone task
       description: Create a new change proposal for a milestone task
       tags:
-        - Change Proposals
+        - ChangeProposals
       parameters:
         - name: projectId
           in: path
@@ -837,7 +837,7 @@ paths:
       summary: Get a specific change proposal for a milestone task
       description: Get a specific change proposal for a milestone task
       tags:
-        - Change Proposals
+        - ChangeProposals
       parameters:
         - name: projectId
           in: path
@@ -881,7 +881,7 @@ paths:
       summary: Update a specific change proposal for a milestone task
       description: Update a specific change proposal for a milestone task
       tags:
-        - Change Proposals
+        - ChangeProposals
       parameters:
         - name: projectId
           in: path
@@ -931,7 +931,7 @@ paths:
       summary: Delete a specific change proposal for a milestone task
       description: Delete a specific change proposal for a milestone task
       tags:
-        - Change Proposals
+        - ChangeProposals
       parameters:
         - name: projectId
           in: path
@@ -1589,14 +1589,6 @@ components:
           type: string
           format: uuid
           description: The ID of the task associated with this change proposal
-        date:
-          type: string
-          format: date-time
-          description: The date of the change proposal
-        userId:
-          type: string
-          format: uuid
-          description: The ID of the user who created the change proposal
         reason:
           type: string
           description: The reason for the proposed change

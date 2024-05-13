@@ -1161,6 +1161,11 @@ paths:
           description: Max results.
           schema:
             type: integer
+        - name: includeRoles
+          in: query
+          description: Include roles in the resulting User objects, use only when necessary
+          schema:
+            type: boolean
       responses:
         "200":
           description: List of users
@@ -1215,6 +1220,11 @@ paths:
           schema:
             type: string
             format: uuid
+        - name: includeRoles
+          in: query
+          description: Include roles in response
+          schema:
+            type: boolean
       responses:
         "200":
           description: User
@@ -1473,6 +1483,19 @@ components:
           items:
             type: string
             format: uuid
+        roles:
+          description: User role
+          readOnly: true
+          type: array
+          items:
+            $ref: '#/components/schemas/UserRole'
+
+    UserRole:
+      type: string
+      description: Role of the task in the connection
+      enum:
+        - ADMIN
+        - USER
 
     Company:
       type: object

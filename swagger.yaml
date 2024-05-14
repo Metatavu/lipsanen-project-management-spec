@@ -736,7 +736,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Error"
-  /v1/projects/{projectId}/milestones/{milestoneId}/tasks/{taskId}/changeProposals:
+  /v1/projects/{projectId}/milestones/{milestoneId}/changeProposals:
     get:
       operationId: listChangeProposals
       summary: Get all change proposals for a milestone task sort from old to new
@@ -757,8 +757,7 @@ paths:
             type: string
             format: uuid
         - name: taskId
-          in: path
-          required: true
+          in: query
           schema:
             type: string
             format: uuid
@@ -806,12 +805,6 @@ paths:
           schema:
             type: string
             format: uuid
-        - name: taskId
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
       requestBody:
         required: true
         content:
@@ -831,7 +824,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Error"
-  /v1/projects/{projectId}/milestones/{milestoneId}/tasks/{taskId}/changeProposals/{changeProposalId}:
+  /v1/projects/{projectId}/milestones/{milestoneId}/changeProposals/{changeProposalId}:
     get:
       operationId: findChangeProposal
       summary: Get a specific change proposal for a milestone task
@@ -846,12 +839,6 @@ paths:
             type: string
             format: uuid
         - name: milestoneId
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
-        - name: taskId
           in: path
           required: true
           schema:
@@ -890,12 +877,6 @@ paths:
             type: string
             format: uuid
         - name: milestoneId
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
-        - name: taskId
           in: path
           required: true
           schema:
@@ -940,12 +921,6 @@ paths:
             type: string
             format: uuid
         - name: milestoneId
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
-        - name: taskId
           in: path
           required: true
           schema:

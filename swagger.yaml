@@ -1574,16 +1574,25 @@ components:
       type: object
       description: Change proposal
       required:
-        - taskProposal
         - status
+        - taskId
       properties:
         id:
           type: string
           format: uuid
           readOnly: true
-        taskProposal:
-          $ref: '#/components/schemas/TaskProposal'
-          description: The proposed changes to the task
+        taskId:
+          type: string
+          format: uuid
+          readOnly: true
+        startDate:
+          description: Null if change is not needed and not null if the start date is proposed to change
+          format: date
+          type: string
+        endDate:
+          description: Null if change is not needed and not null if the end date is proposed to change
+          format: date
+          type: string
         reason:
           type: string
           description: The reason for the proposed change
@@ -1604,24 +1613,6 @@ components:
         - APPROVED
         - REJECTED
 
-    TaskProposal:
-      type: object
-      description: Task proposal object (partial task object)
-      required:
-        - taskId
-      properties:
-        taskId:
-          type: string
-          format: uuid
-          readOnly: true
-        startDate:
-          description: Null if change is not needed and not null if the start date is proposed to change
-          format: date
-          type: string
-        endDate:
-          description: Null if change is not needed and not null if the end date is proposed to change
-          format: date
-          type: string
 
     TaskConnection:
       type: object

@@ -1607,6 +1607,8 @@ components:
     TaskProposal:
       type: object
       description: Task proposal object (partial task object)
+      required:
+        - taskId
       properties:
         taskId:
           type: string

@@ -739,8 +739,8 @@ paths:
   /v1/projects/{projectId}/milestones/{milestoneId}/tasks/{taskId}/changeProposals:
     get:
       operationId: listChangeProposals
-      summary: Get all change proposals for a milestone task
-      description: Get all change proposals for a milestone task
+      summary: Get all change proposals for a milestone task sort from old to new
+      description: Get all change proposals for a milestone task sort from old to new
       tags:
         - ChangeProposals
       parameters:
@@ -1638,9 +1638,11 @@ components:
           format: uuid
           readOnly: true
         startDate:
+          description: Null if change is not needed and not null if the start date is proposed to change
           format: date
           type: string
         endDate:
+          description: Null if change is not needed and not null if the end date is proposed to change
           format: date
           type: string
 

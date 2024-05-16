@@ -865,8 +865,8 @@ paths:
                 $ref: "#/components/schemas/Error"
     put:
       operationId: updateChangeProposal
-      summary: Update a specific change proposal for a milestone task
-      description: Update a specific change proposal for a milestone task
+      summary: Update a specific change proposal within a milestone
+      description: Update a specific change proposal within a milestone
       tags:
         - ChangeProposals
       parameters:

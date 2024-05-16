@@ -859,8 +859,8 @@ paths:
           in: path
           required: true
           schema:
-              type: string
-              format: uuid
+            type: string
+            format: uuid
       requestBody:
         required: true
         content:
@@ -1193,7 +1193,7 @@ components:
           format: int32
         message:
           type: string
-          
+
     ProjectStatus:
       type: string
       description: Project status
@@ -1355,6 +1355,26 @@ components:
         status:
           $ref: '#/components/schemas/TaskStatus'
           description: Task status. TaskConnections is taken into account when updating the status
+        assigneeIds:
+          type: array
+          items:
+            type: string
+          description: List of assignee user IDs
+        userRole:
+          $ref: '#/components/schemas/UserRole'
+          description: User role suggested for the task
+        estimatedDuration:
+          type: string
+          description: Estimated duration of the task
+        estimatedReadiness:
+          type: string
+          description: Estimated readiness of the task
+        attachmentUrls:
+          type: array
+          items:
+            type: string
+            format: url
+          description: URLs of attachments related to the task
         metadata:
           $ref: '#/components/schemas/Metadata'
 

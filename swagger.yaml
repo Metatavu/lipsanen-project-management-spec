@@ -852,7 +852,7 @@ paths:
             format: uuid
       responses:
         "200":
-          description: Specific change proposal for the milestone task
+          description: Found change proposal
           content:
             application/json:
               schema:

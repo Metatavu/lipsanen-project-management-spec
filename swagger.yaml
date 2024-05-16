@@ -1322,6 +1322,14 @@ components:
         endDate:
           format: date
           type: string
+        originalStartDate:
+          format: date
+          type: string
+          description: Original start date of the milestone
+        originalEndDate:
+          format: date
+          type: string
+          description: Original end date of the milestone
         metadata:
           $ref: '#/components/schemas/Metadata'
 

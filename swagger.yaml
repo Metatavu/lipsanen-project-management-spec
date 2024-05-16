@@ -788,8 +788,8 @@ paths:
                 $ref: "#/components/schemas/Error"
     post:
       operationId: createChangeProposal
-      summary: Create a new change proposal for a milestone task
-      description: Create a new change proposal for a milestone task
+      summary: Create a new change proposal within a milestone
+      description: Create a new change proposal within a milestone
       tags:
         - ChangeProposals
       parameters:

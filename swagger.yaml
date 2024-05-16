@@ -736,7 +736,211 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Error"
-
+  /v1/projects/{projectId}/milestones/{milestoneId}/changeProposals:
+    get:
+      operationId: listChangeProposals
+      summary: List change proposals within a milestone
+      description: Lists change proposals within a milestone. Proposals are sorted from earliest to latest created.
+      tags:
+        - ChangeProposals
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: milestoneId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: taskId
+          in: query
+          schema:
+            type: string
+            format: uuid
+        - name: first
+          in: query
+          description: First result.
+          schema:
+            type: integer
+        - name: max
+          in: query
+          description: Max results.
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: List of change proposals
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ChangeProposal'
+        "default":
+          description: Invalid request was sent to the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    post:
+      operationId: createChangeProposal
+      summary: Create a new change proposal within a milestone
+      description: Create a new change proposal within a milestone
+      tags:
+        - ChangeProposals
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: milestoneId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChangeProposal'
+      responses:
+        "200":
+          description: Created change proposal
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChangeProposal'
+        "default":
+          description: Invalid request was sent to the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /v1/projects/{projectId}/milestones/{milestoneId}/changeProposals/{changeProposalId}:
+    get:
+      operationId: findChangeProposal
+      summary: Find a specific change proposal within a milestone
+      description: Find a specific change proposal within a milestone
+      tags:
+        - ChangeProposals
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: milestoneId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: changeProposalId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: Found change proposal
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChangeProposal'
+        "default":
+          description: Invalid request was sent to the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    put:
+      operationId: updateChangeProposal
+      summary: Update a specific change proposal within a milestone
+      description: Update a specific change proposal within a milestone
+      tags:
+        - ChangeProposals
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: milestoneId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: changeProposalId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChangeProposal'
+      responses:
+        "200":
+          description: Updated change proposal
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChangeProposal'
+        "default":
+          description: Invalid request was sent to the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    delete:
+      operationId: deleteChangeProposal
+      summary: Delete a specific change proposal within a milestone
+      description: Deletes a specific change proposal within a milestone
+      tags:
+        - ChangeProposals
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: milestoneId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: changeProposalId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "204":
+          description: Change proposal deleted successfully
+        "default":
+          description: Invalid request was sent to the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
   /v1/projects/{projectId}/connections:
     get:
       operationId: listTaskConnections
@@ -1393,6 +1597,51 @@ components:
         - NOT_STARTED
         - IN_PROGRESS
         - DONE
+
+    ChangeProposal:
+      type: object
+      description: Change proposal
+      required:
+        - status
+        - taskId
+        - reason
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        taskId:
+          type: string
+          format: uuid
+          readOnly: true
+        startDate:
+          description: Null if change is not needed and not null if the start date is proposed to change
+          format: date
+          type: string
+        endDate:
+          description: Null if change is not needed and not null if the end date is proposed to change
+          format: date
+          type: string
+        reason:
+          type: string
+          description: The reason for the proposed change
+        comment:
+          type: string
+          description: Additional comments or details about the proposed change
+        status:
+          $ref: '#/components/schemas/ChangeProposalStatus'
+          description: Status of the change proposal
+        metadata:
+          $ref: '#/components/schemas/Metadata'
+    
+    ChangeProposalStatus:
+      type: string
+      description: Change proposal status
+      enum:
+        - PENDING
+        - APPROVED
+        - REJECTED
+
 
     TaskConnection:
       type: object

@@ -773,7 +773,7 @@ paths:
             type: integer
       responses:
         "200":
-          description: List of change proposals for the milestone task
+          description: List of change proposals
           content:
             application/json:
               schema:

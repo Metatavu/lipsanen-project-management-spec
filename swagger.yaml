@@ -827,8 +827,8 @@ paths:
   /v1/projects/{projectId}/milestones/{milestoneId}/changeProposals/{changeProposalId}:
     get:
       operationId: findChangeProposal
-      summary: Get a specific change proposal for a milestone task
-      description: Get a specific change proposal for a milestone task
+      summary: Find a specific change proposal within a milestone
+      description: Find a specific change proposal within a milestone
       tags:
         - ChangeProposals
       parameters:

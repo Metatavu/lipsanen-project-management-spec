@@ -1569,11 +1569,12 @@ components:
         status:
           $ref: '#/components/schemas/TaskStatus'
           description: Task status. TaskConnections is taken into account when updating the status
-        assignees:
+        assigneeIds:
           type: array
           items:
-            $ref: '#/components/schemas/TaskAssignee'
-          description: List of assignee entities related to the task
+            type: string
+            format: uuid
+          description: List of assignee user IDs
         userRole:
           $ref: '#/components/schemas/UserRole'
           description: User role suggested for the task
@@ -1583,11 +1584,12 @@ components:
         estimatedReadiness:
           type: string
           description: Estimated readiness of the task
-        attachments:
+        attachmentUrls:
           type: array
           items:
-            $ref: '#/components/schemas/TaskAttachment'
-          description: List of attachment entities related to the task
+            type: string
+            format: url
+          description: URLs of attachments related to the task
         metadata:
           $ref: '#/components/schemas/Metadata'
 
@@ -1598,43 +1600,6 @@ components:
         - NOT_STARTED
         - IN_PROGRESS
         - DONE
-
-    TaskAssignee:
-      type: object
-      description: Task assignee entity
-      required:
-        - taskId
-        - assigneeId
-      properties:
-        id:
-          type: string
-          format: uuid
-          readOnly: true
-        taskId:
-          type: string
-          format: uuid
-        assigneeId:
-          type: string
-          description: User ID of the assignee
-
-    TaskAttachment:
-      type: object
-      description: Task attachment entity
-      required:
-        - taskId
-        - attachmentUrl
-      properties:
-        id:
-          type: string
-          format: uuid
-          readOnly: true
-        taskId:
-          type: string
-          format: uuid
-        attachmentUrl:
-          type: string
-          format: url
-          description: URL of the attachment
 
     ChangeProposal:
       type: object
@@ -1671,7 +1636,7 @@ components:
           description: Status of the change proposal
         metadata:
           $ref: '#/components/schemas/Metadata'
-    
+
     ChangeProposalStatus:
       type: string
       description: Change proposal status

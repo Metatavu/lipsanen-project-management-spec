@@ -1536,6 +1536,9 @@ components:
           format: date
           type: string
           description: Original end date of the milestone
+        estimatedReadiness:
+          type: string
+          description: Estimated readiness of the milestone
         metadata:
           $ref: '#/components/schemas/Metadata'
 

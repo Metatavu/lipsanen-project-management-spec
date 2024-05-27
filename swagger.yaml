@@ -1573,6 +1573,7 @@ components:
           type: array
           items:
             type: string
+            format: uuid
           description: List of assignee user IDs
         userRole:
           $ref: '#/components/schemas/UserRole'
@@ -1635,7 +1636,7 @@ components:
           description: Status of the change proposal
         metadata:
           $ref: '#/components/schemas/Metadata'
-    
+
     ChangeProposalStatus:
       type: string
       description: Change proposal status

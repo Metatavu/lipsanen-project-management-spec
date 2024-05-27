@@ -1972,8 +1972,7 @@ components:
         - TASK_ASSIGNED
         - TASK_STATUS_CHANGED
         - CHANGE_PROPOSAL_STATUS_CHANGED
-        - TASK_CONNECTION_CREATED
-        - TASK_CONNECTION_DELETED
+        - COMMENT_LEFT
 
     Metadata:
       type: object

@@ -1250,6 +1250,12 @@ paths:
           description: Max results.
           schema:
             type: integer
+        - name: notificationId
+          in: query
+          description: Filter by notification id
+          schema:
+            type: string
+            format: uuid
         - name: notificationsIncluded
           in: query
           description: Include notifications in the resulting NotificationEvent objects, use only when necessary

@@ -1919,6 +1919,9 @@ components:
     Notification:
       type: object
       description: Notification object that is created upon an event and sent to multiple users
+      required:
+        - message
+        - type
       properties:
         id:
           type: string
@@ -1934,7 +1937,7 @@ components:
         type:
           $ref: '#/components/schemas/NotificationType'
         subjectId:
-          description: ID of the subject entity of the notification, depends on the notification type
+          description: ID of the subject entity of the notification if applicable, depends on the notification type
           type: string
           format: uuid
         metadata:
@@ -1943,6 +1946,10 @@ components:
     NotificationEvent:
       type: object
       description: Received notification by a user
+      required:
+        - notificationId
+        - receiverId
+        - read
       properties:
         id:
           type: string

@@ -1220,7 +1220,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Error"
-    update:
+    put:
       operationId: updateNotificationEvent
       summary: Update a notification event
       description: Update a notification event
@@ -1272,8 +1272,8 @@ paths:
           description: Invalid request was sent to the server
           content:
             application/json:
-            schema:
-              $ref: "#/components/schemas/Error"
+              schema:
+                $ref: "#/components/schemas/Error"
   /v1/users:
     get:
       operationId: listUsers

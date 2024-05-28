@@ -1113,7 +1113,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/Error"
 
-  /v1/projects/{projectId}/notifications/{notificationId}:
+  /v1/notifications/{notificationId}:
     delete:
       operationId: deleteNotification
       summary: Delete a notification
@@ -1121,12 +1121,6 @@ paths:
       tags:
         - Notifications
       parameters:
-        - name: projectId
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
         - name: notificationId
           in: path
           required: true

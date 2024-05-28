@@ -1258,6 +1258,28 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Error"
+    delete:
+        operationId: deleteNotificationEvent
+        summary: Delete a notification event
+        description: Delete a notification event
+        tags:
+          - NotificationEvents
+        parameters:
+          - name: notificationEventId
+            in: path
+            required: true
+            schema:
+              type: string
+              format: uuid
+        responses:
+          "204":
+            description: No content
+          "default":
+            description: Invalid request was sent to the server
+            content:
+              application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
   /v1/users:
     get:
       operationId: listUsers

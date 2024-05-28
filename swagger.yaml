@@ -1850,7 +1850,6 @@ components:
       required:
         - message
         - type
-        - taskId
       properties:
         id:
           type: string

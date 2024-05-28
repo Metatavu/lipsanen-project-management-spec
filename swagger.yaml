@@ -1113,88 +1113,11 @@ paths:
               schema:
                 $ref: "#/components/schemas/Error"
 
-  /v1/projects/{projectId}/notifications:
-    get:
-      operationId: listNotifications
-      summary: Get all notifications
-      description: Get all notifications, can be used only by admin.
-      tags:
-        - Notifications
-      parameters:
-        - name: projectId
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
-        - name: userId
-          in: query
-          required: false
-          schema:
-            type: string
-            format: uuid
-        - name: first
-          in: query
-          description: First result.
-          schema:
-            type: integer
-        - name: max
-          in: query
-          description: Max results.
-          schema:
-            type: integer
-      responses:
-        "200":
-          description: List of notifications
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Notification'
-        "default":
-          description: Invalid request was sent to the server
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
   /v1/projects/{projectId}/notifications/{notificationId}:
-    get:
-      operationId: findNotification
-      summary: Get a notification
-      description: Get a notification by id, can be used only by admin.
-      tags:
-        - Notifications
-      parameters:
-        - name: projectId
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
-        - name: notificationId
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
-      responses:
-        "200":
-          description: Notification
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Notification'
-        "default":
-          description: Invalid request was sent to the server
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
     delete:
       operationId: deleteNotification
       summary: Delete a notification
-      description: Delete a notification, only for testing purposes, can be used only by admin.
+      description: Delete a notification, only for testing purposes.
       tags:
         - Notifications
       parameters:
@@ -1219,7 +1142,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Error"
-  /v1/projects/{projectId}/notificationEvents:
+  /v1/notificationEvents:
     get:
       operationId: listNotificationEvents
       summary: Get all notification events
@@ -1227,16 +1150,16 @@ paths:
       tags:
         - NotificationEvents
       parameters:
-        - name: projectId
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
         - name: userId
           in: query
           description: User id
           required: true
+          schema:
+            type: string
+            format: uuid
+        - name: projectId
+          in: query
+          required: false
           schema:
             type: string
             format: uuid
@@ -1256,11 +1179,6 @@ paths:
           schema:
             type: string
             format: uuid
-        - name: notificationsIncluded
-          in: query
-          description: Include notifications in the resulting NotificationEvent objects, use only when necessary
-          schema:
-            type: boolean
         - name: readStatus
           in: query
           description: Filter by read status
@@ -1281,7 +1199,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Error"
-  /v1/projects/{projectId}/notificationEvents/{notificationEventId}:
+  /v1/notificationEvents/{notificationEventId}:
     get:
       operationId: findNotificationEvent
       summary: Get a notification event
@@ -1289,12 +1207,6 @@ paths:
       tags:
         - NotificationEvents
       parameters:
-        - name: projectId
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
         - name: notificationEventId
           in: path
           required: true
@@ -1321,12 +1233,6 @@ paths:
       tags:
         - NotificationEvents
       parameters:
-        - name: projectId
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
         - name: notificationEventId
           in: path
           required: true
@@ -1933,16 +1839,12 @@ components:
           type: string
           format: uuid
           readOnly: true
-        userId:
-          description: User ID that the notification is related to
-          type: string
-          format: uuid
         message:
           description: notification message
           type: string
         type:
           $ref: '#/components/schemas/NotificationType'
-        subjectId:
+        taskId:
           description: ID of the subject entity of the notification if applicable, depends on the notification type
           type: string
           format: uuid
@@ -1961,12 +1863,8 @@ components:
           type: string
           format: uuid
           readOnly: true
-        notificationId:
-          description: Notification ID that this event belongs to
-          type: string
-          format: uuid
         notification:
-          description: Optional full notification object
+          description: Full notification object
           $ref: '#/components/schemas/Notification'
         receiverId:
           description: User ID that the notification was sent to

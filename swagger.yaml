@@ -1616,7 +1616,6 @@ components:
         taskId:
           type: string
           format: uuid
-          readOnly: true
         startDate:
           description: Null if change is not needed and not null if the start date is proposed to change
           format: date

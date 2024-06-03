@@ -1167,12 +1167,6 @@ paths:
           description: Max results.
           schema:
             type: integer
-        - name: notificationId
-          in: query
-          description: Filter by notification id
-          schema:
-            type: string
-            format: uuid
         - name: readStatus
           in: query
           description: Filter by read status

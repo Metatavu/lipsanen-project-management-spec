@@ -1157,6 +1157,12 @@ paths:
           schema:
             type: string
             format: uuid
+        - name: taskId
+          in: query
+          required: false
+          schema:
+            type: string
+            format: uuid
         - name: first
           in: query
           description: First result.
@@ -1864,7 +1870,7 @@ components:
       type: object
       description: Received notification by a user
       required:
-        - notificationId
+        - notification
         - receiverId
         - read
       properties:

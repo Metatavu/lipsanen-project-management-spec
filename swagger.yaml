@@ -1477,7 +1477,7 @@ components:
 
     UserRole:
       type: string
-      description: Role of the task in the connection
+      description: Access role of the user
       enum:
         - ADMIN
         - USER
@@ -1586,8 +1586,8 @@ components:
             format: uuid
           description: List of assignee user IDs
         userRole:
-          $ref: '#/components/schemas/UserRole'
-          description: User role suggested for the task
+          $ref: '#/components/schemas/JobTitle'
+          description: Job title suggested for the task
         estimatedDuration:
           type: string
           description: Estimated duration of the task

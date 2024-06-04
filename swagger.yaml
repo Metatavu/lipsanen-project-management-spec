@@ -1459,11 +1459,21 @@ components:
             type: string
             format: uuid
         roles:
-          description: User role
+          description: User roles, can be empty or filled if includeRoles pameter is used. Defines the access level of the user.
           readOnly: true
           type: array
           items:
             $ref: '#/components/schemas/UserRole'
+        jobTitle:
+          $ref: '#/components/schemas/JobTitle'
+          description: user's title in the company
+
+    JobTitle:
+      type: string
+      description: User's position in the company
+      enum:
+        - DESIGNER
+        - ARCHITECT
 
     UserRole:
       type: string

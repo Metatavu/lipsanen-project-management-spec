@@ -736,6 +736,236 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Error"
+  /v1/projects/{projectId}/milestones/{milestoneId}/tasks/{taskId}/comments:
+    get:
+      operationId: listTaskComments
+      summary: List comments within a task
+      description: Lists comments within a task. Comments are sorted from earliest to latest created.
+      tags:
+        - TaskComments
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: milestoneId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: taskId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: first
+          in: query
+          description: First result.
+          schema:
+            type: integer
+        - name: max
+          in: query
+          description: Max results.
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: List of comments
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TaskComment'
+        "default":
+          description: Invalid request was sent to the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    post:
+      operationId: createTaskComment
+      summary: Create a new comment within a task
+      description: Create a new comment within a task
+      tags:
+        - TaskComments
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: milestoneId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: taskId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TaskComment'
+      responses:
+        "200":
+          description: Created comment
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TaskComment'
+        "default":
+          description: Invalid request was sent to the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /v1/projects/{projectId}/milestones/{milestoneId}/tasks/{taskId}/comments/{commentId}:
+    get:
+      operationId: findTaskComment
+      summary: Find a specific comment within a task
+      description: Find a specific comment within a task
+      tags:
+        - TaskComments
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: milestoneId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: taskId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: commentId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: Found comment
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TaskComment'
+        "default":
+          description: Invalid request was sent to the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    put:
+      operationId: updateTaskComment
+      summary: Update a specific comment within a task
+      description: Update a specific comment within a task
+      tags:
+        - TaskComments
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: milestoneId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: taskId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: commentId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TaskComment'
+      responses:
+        "200":
+          description: Updated comment
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TaskComment'
+        "default":
+          description: Invalid request was sent to the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    delete:
+      operationId: deleteTaskComment
+      summary: Delete a specific comment within a task
+      description: Deletes a specific comment within a task
+      tags:
+        - TaskComments
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: milestoneId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: taskId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: commentId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "204":
+          description: Comment deleted successfully
+        "default":
+          description: Invalid request was sent to the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
   /v1/projects/{projectId}/milestones/{milestoneId}/changeProposals:
     get:
       operationId: listChangeProposals
@@ -1680,6 +1910,18 @@ components:
         - FINISH_TO_START
         - START_TO_START
         - FINISH_TO_FINISH
+
+    TaskComment:
+      type: object
+      description: Task comment
+      properties:
+        taskId:
+          type: string
+          format: uuid
+        comment:
+          type: string
+        metadata:
+          $ref: '#/components/schemas/Metadata'
 
     Metadata:
       type: object

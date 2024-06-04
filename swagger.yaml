@@ -1863,8 +1863,6 @@ components:
           description: ID of the subject entity of the notification if applicable, depends on the notification type
           type: string
           format: uuid
-        metadata:
-          $ref: '#/components/schemas/Metadata'
 
     NotificationEvent:
       type: object

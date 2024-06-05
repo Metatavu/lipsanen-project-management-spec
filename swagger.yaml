@@ -1895,6 +1895,7 @@ components:
       enum:
         - TASK_ASSIGNED
         - TASK_STATUS_CHANGED
+        - CHANGE_PROPOSAL_CREATED
         - CHANGE_PROPOSAL_STATUS_CHANGED
         - COMMENT_LEFT
 

@@ -2093,6 +2093,10 @@ components:
           description: ID of the subject entity of the notification if applicable, depends on the notification type
           type: string
           format: uuid
+        commentId:
+          description: ID of the comment entity of the notification if applicable, depends on the notification type
+          type: string
+          format: uuid
 
     NotificationEvent:
       type: object

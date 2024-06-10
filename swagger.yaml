@@ -2136,10 +2136,20 @@ components:
     TaskComment:
       type: object
       description: Task comment
+      required:
+        - taskId
+        - comment
+        - referencedUsers
       properties:
         taskId:
           type: string
           format: uuid
+        referencedUsers:
+          type: array
+          items:
+            type: string
+            format: uuid
+          description: IDs of users that the comment affects
         comment:
           type: string
         metadata:

@@ -1537,7 +1537,7 @@ components:
           type: string
           description: Original end date of the milestone
         estimatedReadiness:
-          type: string
+          type: number
           description: Estimated readiness of the milestone
         metadata:
           $ref: '#/components/schemas/Metadata'
@@ -1584,7 +1584,7 @@ components:
           type: string
           description: Estimated duration of the task
         estimatedReadiness:
-          type: string
+          type: number
           description: Estimated readiness of the task
         attachmentUrls:
           type: array
@@ -1638,7 +1638,7 @@ components:
           description: Status of the change proposal
         metadata:
           $ref: '#/components/schemas/Metadata'
-    
+
     ChangeProposalStatus:
       type: string
       description: Change proposal status

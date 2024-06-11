@@ -2148,7 +2148,6 @@ components:
         taskId:
           type: string
           format: uuid
-          readOnly: true
         referencedUsers:
           type: array
           items:

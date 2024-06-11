@@ -2141,9 +2141,14 @@ components:
         - comment
         - referencedUsers
       properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
         taskId:
           type: string
           format: uuid
+          readOnly: true
         referencedUsers:
           type: array
           items:

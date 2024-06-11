@@ -1537,7 +1537,8 @@ components:
           type: string
           description: Original end date of the milestone
         estimatedReadiness:
-          type: number
+          type: integer
+          format: int32
           minimum: 0
           maximum: 100
           description: Estimated readiness of the milestone

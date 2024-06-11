@@ -1704,9 +1704,6 @@ components:
           minimum: 0
           maximum: 100
           description: Estimated readiness of the milestone
-        estimatedDuration:
-          type: number
-          description: Estimated duration of the milestone
         metadata:
           $ref: '#/components/schemas/Metadata'
 

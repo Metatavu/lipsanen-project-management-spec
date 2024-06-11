@@ -1591,7 +1591,8 @@ components:
           format: float
           description: Estimated duration of the task in days
         estimatedReadiness:
-          type: number
+          type: integer
+          format: int32
           minimum: 0
           maximum: 100
           description: Estimated readiness of the task

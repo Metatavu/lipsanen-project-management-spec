@@ -1538,7 +1538,12 @@ components:
           description: Original end date of the milestone
         estimatedReadiness:
           type: number
+          minimum: 0
+          maximum: 100
           description: Estimated readiness of the milestone
+        estimatedDuration:
+          type: number
+          description: Estimated duration of the milestone
         metadata:
           $ref: '#/components/schemas/Metadata'
 
@@ -1581,10 +1586,13 @@ components:
           $ref: '#/components/schemas/UserRole'
           description: User role suggested for the task
         estimatedDuration:
-          type: string
-          description: Estimated duration of the task
+          type: number
+          format: float
+          description: Estimated duration of the task in days
         estimatedReadiness:
           type: number
+          minimum: 0
+          maximum: 100
           description: Estimated readiness of the task
         attachmentUrls:
           type: array

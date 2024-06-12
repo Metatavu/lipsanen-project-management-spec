@@ -1545,12 +1545,6 @@ paths:
       tags:
         - JobPositions
       parameters:
-        - name: userId
-          in: query
-          description: User id
-          schema:
-            type: string
-            format: uuid
         - name: first
           in: query
           description: First result.

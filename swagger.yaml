@@ -1112,6 +1112,168 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Error"
+
+  /v1/notifications/{notificationId}:
+    delete:
+      operationId: deleteNotification
+      summary: Delete a notification
+      description: Delete a notification, only for testing purposes.
+      tags:
+        - Notifications
+      parameters:
+        - name: notificationId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "204":
+          description: No content
+        "default":
+          description: Invalid request was sent to the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /v1/notificationEvents:
+    get:
+      operationId: listNotificationEvents
+      summary: Get all notification events
+      description: Get all notification events for a user
+      tags:
+        - NotificationEvents
+      parameters:
+        - name: userId
+          in: query
+          description: User id
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: projectId
+          in: query
+          required: false
+          schema:
+            type: string
+            format: uuid
+        - name: taskId
+          in: query
+          required: false
+          schema:
+            type: string
+            format: uuid
+        - name: first
+          in: query
+          description: First result.
+          schema:
+            type: integer
+        - name: max
+          in: query
+          description: Max results.
+          schema:
+            type: integer
+        - name: readStatus
+          in: query
+          description: Filter by read status
+          schema:
+            type: boolean
+      responses:
+        "200":
+          description: List of notification events
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/NotificationEvent'
+        "default":
+          description: Invalid request was sent to the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /v1/notificationEvents/{notificationEventId}:
+    get:
+      operationId: findNotificationEvent
+      summary: Get a notification event
+      description: Get a notification event
+      tags:
+        - NotificationEvents
+      parameters:
+        - name: notificationEventId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: Notification Event
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotificationEvent'
+        "default":
+          description: Invalid request was sent to the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    put:
+      operationId: updateNotificationEvent
+      summary: Update a notification event
+      description: Update a notification event
+      tags:
+        - NotificationEvents
+      parameters:
+        - name: notificationEventId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NotificationEvent'
+      responses:
+        "200":
+          description: Updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotificationEvent'
+        "default":
+          description: Invalid request was sent to the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    delete:
+      operationId: deleteNotificationEvent
+      summary: Delete a notification event
+      description: Delete a notification event
+      tags:
+        - NotificationEvents
+      parameters:
+        - name: notificationEventId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "204":
+          description: No content
+        "default":
+          description: Invalid request was sent to the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
   /v1/users:
     get:
       operationId: listUsers
@@ -1546,6 +1708,12 @@ components:
           format: date
           type: string
           description: Original end date of the milestone
+        estimatedReadiness:
+          type: integer
+          format: int32
+          minimum: 0
+          maximum: 100
+          description: Estimated readiness of the milestone
         metadata:
           $ref: '#/components/schemas/Metadata'
 
@@ -1589,10 +1757,14 @@ components:
           $ref: '#/components/schemas/JobTitle'
           description: Job title suggested for the task
         estimatedDuration:
-          type: string
-          description: Estimated duration of the task
+          type: number
+          format: float
+          description: Estimated duration of the task in days
         estimatedReadiness:
-          type: string
+          type: integer
+          format: int32
+          minimum: 0
+          maximum: 100
           description: Estimated readiness of the task
         attachmentUrls:
           type: array
@@ -1690,6 +1862,62 @@ components:
         - FINISH_TO_START
         - START_TO_START
         - FINISH_TO_FINISH
+
+    Notification:
+      type: object
+      description: Notification object that is created upon an event and sent to multiple users
+      required:
+        - message
+        - type
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        message:
+          description: notification message
+          type: string
+        type:
+          $ref: '#/components/schemas/NotificationType'
+        taskId:
+          description: ID of the subject entity of the notification if applicable, depends on the notification type
+          type: string
+          format: uuid
+
+    NotificationEvent:
+      type: object
+      description: Received notification by a user
+      required:
+        - notification
+        - receiverId
+        - read
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        notification:
+          description: Full notification object
+          $ref: '#/components/schemas/Notification'
+        receiverId:
+          description: User ID that the notification was sent to
+          type: string
+          format: uuid
+        read:
+          description: Whether the notification has been read
+          type: boolean
+        metadata:
+          $ref: '#/components/schemas/Metadata'
+
+    NotificationType:
+      type: string
+      description: Notification type
+      enum:
+        - TASK_ASSIGNED
+        - TASK_STATUS_CHANGED
+        - CHANGE_PROPOSAL_CREATED
+        - CHANGE_PROPOSAL_STATUS_CHANGED
+        - COMMENT_LEFT
 
     Metadata:
       type: object

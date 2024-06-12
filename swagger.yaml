@@ -1739,12 +1739,9 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/UserRole'
-        jobPositions:
+        jobPosition:
           description: List of job positions that the user has
-          type: array
-          items:
-            items:
-              $ref: '#/components/schemas/JobPosition'
+          $ref: '#/components/schemas/JobPosition'
 
     JobPosition:
       type: object

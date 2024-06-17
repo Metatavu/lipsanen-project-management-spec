@@ -1928,6 +1928,12 @@ components:
           format: date
           type: string
           description: Original end date of the milestone
+        estimatedReadiness:
+          type: integer
+          format: int32
+          minimum: 0
+          maximum: 100
+          description: Estimated readiness of the milestone
         metadata:
           $ref: '#/components/schemas/Metadata'
 
@@ -1971,10 +1977,14 @@ components:
           $ref: '#/components/schemas/UserRole'
           description: User role suggested for the task
         estimatedDuration:
-          type: string
-          description: Estimated duration of the task
+          type: number
+          format: float
+          description: Estimated duration of the task in days
         estimatedReadiness:
-          type: string
+          type: integer
+          format: int32
+          minimum: 0
+          maximum: 100
           description: Estimated readiness of the task
         attachmentUrls:
           type: array

@@ -1528,6 +1528,11 @@ paths:
           description: Max results.
           schema:
             type: integer
+        - name: includeRoles
+          in: query
+          description: Include roles in the resulting User objects, use only when necessary
+          schema:
+            type: boolean
       responses:
         "200":
           description: List of users
@@ -1582,6 +1587,11 @@ paths:
           schema:
             type: string
             format: uuid
+        - name: includeRoles
+          in: query
+          description: Include roles in response
+          schema:
+            type: boolean
       responses:
         "200":
           description: User
@@ -1979,6 +1989,12 @@ components:
           items:
             type: string
             format: uuid
+        roles:
+          description: User roles, can be empty or filled if includeRoles pameter is used. Defines the access level of the user.
+          readOnly: true
+          type: array
+          items:
+            $ref: '#/components/schemas/UserRole'
         jobPosition:
           description: List of job positions that the user has
           $ref: '#/components/schemas/JobPosition'

@@ -1995,9 +1995,10 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/UserRole'
-        jobPosition:
+        jobPositionId:
           description: List of job positions that the user has
-          $ref: '#/components/schemas/JobPosition'
+          type: string
+          format: uuid
 
     JobPosition:
       type: object
@@ -2134,7 +2135,10 @@ components:
             type: string
             format: uuid
           description: List of assignee user IDs
-        jobPosition:
+        userRole:
+          $ref: '#/components/schemas/UserRole'
+          description: User role suggested for the task
+        jobPositionId:
           type: string
           format: uuid
           description: Job title suggested for the task

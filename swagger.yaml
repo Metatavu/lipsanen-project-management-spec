@@ -1771,7 +1771,7 @@ paths:
     get:
       operationId: listJobPositions
       summary: Get all jobPositions
-      description: Get all jobPositions
+      description: Get all jobPositions, sorted alphabetically
       tags:
         - JobPositions
       parameters:
@@ -1996,7 +1996,7 @@ components:
           items:
             $ref: '#/components/schemas/UserRole'
         jobPositionId:
-          description: List of job positions that the user has
+          description: Job position that the user has
           type: string
           format: uuid
 

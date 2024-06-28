@@ -1767,6 +1767,145 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Error"
+  /v1/jobPositions:
+    get:
+      operationId: listJobPositions
+      summary: Get all jobPositions
+      description: Get all jobPositions, sorted alphabetically
+      tags:
+        - JobPositions
+      parameters:
+        - name: first
+          in: query
+          description: First result.
+          schema:
+            type: integer
+        - name: max
+          in: query
+          description: Max results.
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: List of jobPositions
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/JobPosition'
+        "default":
+          description: Invalid request was sent to the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    post:
+      operationId: createJobPosition
+      summary: Create a new position
+      description: Create a new position
+      tags:
+        - JobPositions
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/JobPosition'
+      responses:
+        "200":
+          description: Created position
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobPosition'
+        "default":
+          description: Invalid request was sent to the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /v1/jobPositions/{positionId}:
+    get:
+      operationId: findJobPosition
+      summary: Get a position
+      description: Get a position
+      tags:
+        - JobPositions
+      parameters:
+        - name: positionId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: JobPosition
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobPosition'
+        "default":
+          description: Invalid request was sent to the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    put:
+      operationId: updateJobPosition
+      summary: Update a position
+      description: Update a position
+      tags:
+        - JobPositions
+      parameters:
+        - name: positionId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/JobPosition'
+      responses:
+        "200":
+          description: Updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobPosition'
+        "default":
+          description: Invalid request was sent to the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    delete:
+      operationId: deleteJobPosition
+      summary: Delete a position
+      description: Delete a position
+      tags:
+        - JobPositions
+      parameters:
+        - name: positionId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "204":
+          description: No content
+        "default":
+          description: Invalid request was sent to the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
 
 
 components:
@@ -1851,15 +1990,38 @@ components:
             type: string
             format: uuid
         roles:
-          description: User role
+          description: User roles, can be empty or filled if includeRoles pameter is used. Defines the access level of the user.
           readOnly: true
           type: array
           items:
             $ref: '#/components/schemas/UserRole'
+        jobPositionId:
+          description: Job position that the user has
+          type: string
+          format: uuid
+
+    JobPosition:
+      type: object
+      description: User's position in the company
+      required:
+        - name
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        name:
+          type: string
+        color:
+          type: string
+        iconName:
+          type: string
+        metadata:
+          $ref: '#/components/schemas/Metadata'
 
     UserRole:
       type: string
-      description: Role of the task in the connection
+      description: Access role of the user
       enum:
         - ADMIN
         - USER
@@ -1976,6 +2138,10 @@ components:
         userRole:
           $ref: '#/components/schemas/UserRole'
           description: User role suggested for the task
+        jobPositionId:
+          type: string
+          format: uuid
+          description: Job title suggested for the task
         estimatedDuration:
           type: number
           format: float

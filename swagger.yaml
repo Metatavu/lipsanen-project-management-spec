@@ -1518,6 +1518,12 @@ paths:
           schema:
             type: string
             format: uuid
+        - name: keycloakId
+          in: query
+          description: Keycloak user id
+          schema:
+              type: string
+              format: uuid
         - name: first
           in: query
           description: First result.
@@ -1971,6 +1977,10 @@ components:
         id:
           type: string
           format: uuid
+        keycloakId:
+          type: string
+          format: uuid
+          readOnly: true
         firstName:
           type: string
         lastName:

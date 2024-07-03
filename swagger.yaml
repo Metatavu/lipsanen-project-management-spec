@@ -1520,7 +1520,7 @@ paths:
             format: uuid
         - name: keycloakId
           in: query
-          description: Keycloak id
+          description: Keycloak user id
           schema:
               type: string
               format: uuid

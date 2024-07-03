@@ -2025,6 +2025,7 @@ components:
       enum:
         - ADMIN
         - USER
+        - PROJECT_OWNER
 
     Company:
       type: object

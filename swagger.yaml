@@ -1970,7 +1970,6 @@ components:
       type: object
       description: User object
       required:
-        - keycloakId
         - firstName
         - lastName
         - email
@@ -1981,6 +1980,7 @@ components:
         keycloakId:
           type: string
           format: uuid
+          readOnly: true
         firstName:
           type: string
         lastName:

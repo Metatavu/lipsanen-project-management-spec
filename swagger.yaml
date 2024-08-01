@@ -593,11 +593,6 @@ paths:
           schema:
             type: string
             format: uuid
-        - name: milestoneId
-          in: query
-          schema:
-            type: string
-            format: uuid
       requestBody:
         required: true
         content:
@@ -631,11 +626,6 @@ paths:
           schema:
             type: string
             format: uuid
-        - name: milestoneId
-          in: query
-          schema:
-            type: string
-            format: uuid
         - name: taskId
           in: path
           required: true
@@ -665,11 +655,6 @@ paths:
         - name: projectId
           in: path
           required: true
-          schema:
-            type: string
-            format: uuid
-        - name: milestoneId
-          in: query
           schema:
             type: string
             format: uuid
@@ -711,11 +696,6 @@ paths:
           schema:
             type: string
             format: uuid
-        - name: milestoneId
-          in: query
-          schema:
-            type: string
-            format: uuid
         - name: taskId
           in: path
           required: true
@@ -742,11 +722,6 @@ paths:
         - name: projectId
           in: path
           required: true
-          schema:
-            type: string
-            format: uuid
-        - name: milestoneId
-          in: query
           schema:
             type: string
             format: uuid
@@ -794,11 +769,6 @@ paths:
           schema:
             type: string
             format: uuid
-        - name: milestoneId
-          in: query
-          schema:
-            type: string
-            format: uuid
         - name: taskId
           in: path
           required: true
@@ -838,11 +808,6 @@ paths:
           schema:
             type: string
             format: uuid
-        - name: milestoneId
-          in: query
-          schema:
-            type: string
-            format: uuid
         - name: taskId
           in: path
           required: true
@@ -878,11 +843,6 @@ paths:
         - name: projectId
           in: path
           required: true
-          schema:
-            type: string
-            format: uuid
-        - name: milestoneId
-          in: query
           schema:
             type: string
             format: uuid
@@ -927,11 +887,6 @@ paths:
         - name: projectId
           in: path
           required: true
-          schema:
-            type: string
-            format: uuid
-        - name: milestoneId
-          in: query
           schema:
             type: string
             format: uuid
@@ -1018,11 +973,6 @@ paths:
           schema:
             type: string
             format: uuid
-        - name: milestoneId
-          in: query
-          schema:
-            type: string
-            format: uuid
       requestBody:
         required: true
         content:
@@ -1056,11 +1006,6 @@ paths:
           schema:
             type: string
             format: uuid
-        - name: milestoneId
-          in: query
-          schema:
-            type: string
-            format: uuid
         - name: changeProposalId
           in: path
           required: true
@@ -1090,11 +1035,6 @@ paths:
         - name: projectId
           in: path
           required: true
-          schema:
-            type: string
-            format: uuid
-        - name: milestoneId
-          in: query
           schema:
             type: string
             format: uuid
@@ -1133,11 +1073,6 @@ paths:
         - name: projectId
           in: path
           required: true
-          schema:
-            type: string
-            format: uuid
-        - name: milestoneId
-          in: query
           schema:
             type: string
             format: uuid

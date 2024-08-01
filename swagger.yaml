@@ -539,8 +539,8 @@ paths:
   /v1/projects/{projectId}/tasks:
     get:
       operationId: listTasks
-      summary: Get all milestone tasks
-      description: Get all milestone tasks
+      summary: Get all tasks
+      description: Get all tasks
       tags:
         - Tasks
       parameters:
@@ -582,8 +582,8 @@ paths:
                 $ref: "#/components/schemas/Error"
     post:
       operationId: createTask
-      summary: Create a new milestone task
-      description: Create a new milestone task
+      summary: Create a new task
+      description: Create a new task
       tags:
         - Tasks
       parameters:
@@ -615,8 +615,8 @@ paths:
   /v1/projects/{projectId}/tasks/{taskId}:
     get:
       operationId: findTask
-      summary: Get a milestone task
-      description: Get a milestone task
+      summary: Get a task
+      description: Get a task
       tags:
         - Tasks
       parameters:
@@ -647,8 +647,8 @@ paths:
                 $ref: "#/components/schemas/Error"
     put:
       operationId: updateTask
-      summary: Update a milestone task
-      description: Update a milestone task
+      summary: Update a task
+      description: Update a task
       tags:
         - Tasks
       parameters:
@@ -685,8 +685,8 @@ paths:
                 $ref: "#/components/schemas/Error"
     delete:
       operationId: deleteTask
-      summary: Delete a milestone task
-      description: Delete a milestone task
+      summary: Delete a task
+      description: Delete a task
       tags:
         - Tasks
       parameters:

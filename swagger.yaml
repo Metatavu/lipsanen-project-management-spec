@@ -925,6 +925,11 @@ paths:
           schema:
             type: string
             format: uuid
+        - name: milestoneId
+          in: query
+          schema:
+            type: string
+            format: uuid
         - name: taskId
           in: query
           schema:

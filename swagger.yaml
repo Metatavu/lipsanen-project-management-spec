@@ -536,7 +536,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Error"
-  /v1/projects/{projectId}/milestones/{milestoneId}/tasks:
+  /v1/projects/{projectId}/tasks:
     get:
       operationId: listTasks
       summary: Get all milestone tasks
@@ -551,8 +551,7 @@ paths:
             type: string
             format: uuid
         - name: milestoneId
-          in: path
-          required: true
+          in: query
           schema:
             type: string
             format: uuid
@@ -619,7 +618,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Error"
-  /v1/projects/{projectId}/milestones/{milestoneId}/tasks/{taskId}:
+  /v1/projects/{projectId}/tasks/{taskId}:
     get:
       operationId: findTask
       summary: Get a milestone task
@@ -634,8 +633,7 @@ paths:
             type: string
             format: uuid
         - name: milestoneId
-          in: path
-          required: true
+          in: query
           schema:
             type: string
             format: uuid
@@ -736,7 +734,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Error"
-  /v1/projects/{projectId}/milestones/{milestoneId}/tasks/{taskId}/comments:
+  /v1/projects/{projectId}/tasks/{taskId}/comments:
     get:
       operationId: listTaskComments
       summary: List comments within a task
@@ -751,8 +749,7 @@ paths:
             type: string
             format: uuid
         - name: milestoneId
-          in: path
-          required: true
+          in: query
           schema:
             type: string
             format: uuid
@@ -831,7 +828,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Error"
-  /v1/projects/{projectId}/milestones/{milestoneId}/tasks/{taskId}/comments/{commentId}:
+  /v1/projects/{projectId}/tasks/{taskId}/comments/{commentId}:
     get:
       operationId: findTaskComment
       summary: Find a specific comment within a task
@@ -846,8 +843,7 @@ paths:
             type: string
             format: uuid
         - name: milestoneId
-          in: path
-          required: true
+          in: query
           schema:
             type: string
             format: uuid
@@ -966,7 +962,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Error"
-  /v1/projects/{projectId}/milestones/{milestoneId}/changeProposals:
+  /v1/projects/{projectId}/changeProposals:
     get:
       operationId: listChangeProposals
       summary: List change proposals within a milestone
@@ -981,8 +977,7 @@ paths:
             type: string
             format: uuid
         - name: milestoneId
-          in: path
-          required: true
+          in: query
           schema:
             type: string
             format: uuid
@@ -1054,7 +1049,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Error"
-  /v1/projects/{projectId}/milestones/{milestoneId}/changeProposals/{changeProposalId}:
+  /v1/projects/{projectId}/changeProposals/{changeProposalId}:
     get:
       operationId: findChangeProposal
       summary: Find a specific change proposal within a milestone
@@ -1069,8 +1064,7 @@ paths:
             type: string
             format: uuid
         - name: milestoneId
-          in: path
-          required: true
+          in: query
           schema:
             type: string
             format: uuid

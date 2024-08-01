@@ -594,8 +594,7 @@ paths:
             type: string
             format: uuid
         - name: milestoneId
-          in: path
-          required: true
+          in: query
           schema:
             type: string
             format: uuid
@@ -670,8 +669,7 @@ paths:
             type: string
             format: uuid
         - name: milestoneId
-          in: path
-          required: true
+          in: query
           schema:
             type: string
             format: uuid
@@ -714,8 +712,7 @@ paths:
             type: string
             format: uuid
         - name: milestoneId
-          in: path
-          required: true
+          in: query
           schema:
             type: string
             format: uuid
@@ -798,8 +795,7 @@ paths:
             type: string
             format: uuid
         - name: milestoneId
-          in: path
-          required: true
+          in: query
           schema:
             type: string
             format: uuid
@@ -886,8 +882,7 @@ paths:
             type: string
             format: uuid
         - name: milestoneId
-          in: path
-          required: true
+          in: query
           schema:
             type: string
             format: uuid
@@ -936,8 +931,7 @@ paths:
             type: string
             format: uuid
         - name: milestoneId
-          in: path
-          required: true
+          in: query
           schema:
             type: string
             format: uuid
@@ -1025,8 +1019,7 @@ paths:
             type: string
             format: uuid
         - name: milestoneId
-          in: path
-          required: true
+          in: query
           schema:
             type: string
             format: uuid
@@ -1101,8 +1094,7 @@ paths:
             type: string
             format: uuid
         - name: milestoneId
-          in: path
-          required: true
+          in: query
           schema:
             type: string
             format: uuid
@@ -1145,8 +1137,7 @@ paths:
             type: string
             format: uuid
         - name: milestoneId
-          in: path
-          required: true
+          in: query
           schema:
             type: string
             format: uuid

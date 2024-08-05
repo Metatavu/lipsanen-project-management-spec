@@ -1094,8 +1094,8 @@ paths:
   /v1/projects/{projectId}/changeProposals/{changeProposalId}/tasks:
     get:
       operationId: listChangeProposalTasksPreview
-      summary: Lists a the task updates that the current change proposal affects if accepted
-      description: Lists a the task updates that the current change proposal affects if accepted
+      summary: List of updated tasks that are affected by the change proposal
+      description: List of updated tasks that are affected by the change proposal
       tags:
         - ChangeProposals
       parameters:

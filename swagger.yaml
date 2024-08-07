@@ -1091,6 +1091,41 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Error"
+  /v1/projects/{projectId}/changeProposals/{changeProposalId}/tasks:
+    get:
+      operationId: listChangeProposalTasksPreview
+      summary: List of updated tasks that are affected by the change proposal
+      description: List of updated tasks that are affected by the change proposal
+      tags:
+        - ChangeProposals
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: changeProposalId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: List of affected tasks
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Task'
+        "default":
+          description: Invalid request was sent to the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
   /v1/projects/{projectId}/connections:
     get:
       operationId: listTaskConnections

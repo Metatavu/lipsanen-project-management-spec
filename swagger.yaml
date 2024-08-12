@@ -1477,8 +1477,14 @@ paths:
           in: query
           description: Keycloak user id
           schema:
-              type: string
-              format: uuid
+            type: string
+            format: uuid
+        - name: projectId
+          in: query
+          description: project id
+          schema:
+            type: string
+            format: uuid
         - name: first
           in: query
           description: First result.

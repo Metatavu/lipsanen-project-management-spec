@@ -911,7 +911,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Error"
-  /v1/projects/{projectId}/changeProposals:
+
+  /v1/changeProposals:
     get:
       operationId: listChangeProposals
       summary: List change proposals within a milestone
@@ -920,18 +921,19 @@ paths:
         - ChangeProposals
       parameters:
         - name: projectId
-          in: path
-          required: true
+          in: query
           schema:
             type: string
             format: uuid
         - name: milestoneId
           in: query
+          description: Cannot be used without projectId
           schema:
             type: string
             format: uuid
         - name: taskId
           in: query
+          description: Cannot be used without projectId
           schema:
             type: string
             format: uuid
@@ -960,6 +962,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Error"
+
+  /v1/projects/{projectId}/changeProposals:
     post:
       operationId: createChangeProposal
       summary: Create a new change proposal within a milestone

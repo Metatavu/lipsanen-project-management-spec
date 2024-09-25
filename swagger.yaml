@@ -552,7 +552,7 @@ paths:
             format: uuid
         - name: changeProposalId
           in: query
-          description: Lists the tasks that will be affected by the change proposal.
+          description: Lists the tasks that will be affected by the change proposal. Cannot be used with other parameters
           schema:
             type: string
             format: uuid

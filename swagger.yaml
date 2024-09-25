@@ -546,18 +546,18 @@ paths:
       parameters:
         - name: projectId
           in: query
-          description: Lists the tasks within the project. Cannot be used with other parameters
+          description: Lists the tasks within the project.
           schema:
             type: string
             format: uuid
         - name: changeProposalId
           in: query
-          description: Lists the tasks that will be affected by the change proposal. Cannot be used with other parameters
+          description: Lists the tasks that will be affected by the change proposal.
           schema:
             type: string
             format: uuid
         - name: milestoneId
-          description: Lists the tasks within the milestone. Cannot be used with other parameters
+          description: Lists the tasks within the milestone.
           in: query
           schema:
             type: string

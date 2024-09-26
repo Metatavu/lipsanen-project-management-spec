@@ -1380,6 +1380,12 @@ paths:
           schema:
             type: string
             format: uuid
+        - name: jobPositionId
+          in: query
+          description: Job position id
+          schema:
+            type: string
+            format: uuid
         - name: first
           in: query
           description: First result.

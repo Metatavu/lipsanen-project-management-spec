@@ -536,7 +536,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Error"
-  /v1/projects/{projectId}/tasks:
+  /v1/tasks:
     get:
       operationId: listTasks
       summary: Get all tasks
@@ -545,12 +545,19 @@ paths:
         - Tasks
       parameters:
         - name: projectId
-          in: path
-          required: true
+          in: query
+          description: Lists the tasks within the project.
+          schema:
+            type: string
+            format: uuid
+        - name: changeProposalId
+          in: query
+          description: Lists the tasks that will be affected by the change proposal. Cannot be used with other parameters
           schema:
             type: string
             format: uuid
         - name: milestoneId
+          description: Lists the tasks within the milestone.
           in: query
           schema:
             type: string
@@ -586,13 +593,6 @@ paths:
       description: Create a new task
       tags:
         - Tasks
-      parameters:
-        - name: projectId
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
       requestBody:
         required: true
         content:
@@ -612,7 +612,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Error"
-  /v1/projects/{projectId}/tasks/{taskId}:
+  /v1/tasks/{taskId}:
     get:
       operationId: findTask
       summary: Get a task
@@ -620,12 +620,6 @@ paths:
       tags:
         - Tasks
       parameters:
-        - name: projectId
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
         - name: taskId
           in: path
           required: true
@@ -652,12 +646,6 @@ paths:
       tags:
         - Tasks
       parameters:
-        - name: projectId
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
         - name: taskId
           in: path
           required: true
@@ -690,12 +678,6 @@ paths:
       tags:
         - Tasks
       parameters:
-        - name: projectId
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
         - name: taskId
           in: path
           required: true
@@ -711,7 +693,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Error"
-  /v1/projects/{projectId}/tasks/{taskId}/comments:
+  /v1/tasks/{taskId}/comments:
     get:
       operationId: listTaskComments
       summary: List comments within a task
@@ -719,12 +701,6 @@ paths:
       tags:
         - TaskComments
       parameters:
-        - name: projectId
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
         - name: taskId
           in: path
           required: true
@@ -763,12 +739,6 @@ paths:
       tags:
         - TaskComments
       parameters:
-        - name: projectId
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
         - name: taskId
           in: path
           required: true
@@ -794,7 +764,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Error"
-  /v1/projects/{projectId}/tasks/{taskId}/comments/{commentId}:
+  /v1/tasks/{taskId}/comments/{commentId}:
     get:
       operationId: findTaskComment
       summary: Find a specific comment within a task
@@ -802,12 +772,6 @@ paths:
       tags:
         - TaskComments
       parameters:
-        - name: projectId
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
         - name: taskId
           in: path
           required: true
@@ -840,12 +804,6 @@ paths:
       tags:
         - TaskComments
       parameters:
-        - name: projectId
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
         - name: taskId
           in: path
           required: true
@@ -884,12 +842,6 @@ paths:
       tags:
         - TaskComments
       parameters:
-        - name: projectId
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
         - name: taskId
           in: path
           required: true
@@ -915,8 +867,8 @@ paths:
   /v1/changeProposals:
     get:
       operationId: listChangeProposals
-      summary: List change proposals within a milestone
-      description: Lists change proposals within a milestone. Proposals are sorted from earliest to latest created.
+      summary: List change proposals
+      description: Lists change proposals. Proposals are sorted from earliest to latest created.
       tags:
         - ChangeProposals
       parameters:
@@ -962,21 +914,12 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Error"
-
-  /v1/projects/{projectId}/changeProposals:
     post:
       operationId: createChangeProposal
-      summary: Create a new change proposal within a milestone
-      description: Create a new change proposal within a milestone
+      summary: Create a new change proposal
+      description: Create a new change proposal
       tags:
         - ChangeProposals
-      parameters:
-        - name: projectId
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
       requestBody:
         required: true
         content:
@@ -996,20 +939,14 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Error"
-  /v1/projects/{projectId}/changeProposals/{changeProposalId}:
+  /v1/changeProposals/{changeProposalId}:
     get:
       operationId: findChangeProposal
-      summary: Find a specific change proposal within a milestone
-      description: Find a specific change proposal within a milestone
+      summary: Find a specific change proposal
+      description: Find a specific change proposal
       tags:
         - ChangeProposals
       parameters:
-        - name: projectId
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
         - name: changeProposalId
           in: path
           required: true
@@ -1031,17 +968,11 @@ paths:
                 $ref: "#/components/schemas/Error"
     put:
       operationId: updateChangeProposal
-      summary: Update a specific change proposal within a milestone
-      description: Update a specific change proposal within a milestone
+      summary: Update a specific change proposal
+      description: Update a specific change proposal
       tags:
         - ChangeProposals
       parameters:
-        - name: projectId
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
         - name: changeProposalId
           in: path
           required: true
@@ -1069,17 +1000,11 @@ paths:
                 $ref: "#/components/schemas/Error"
     delete:
       operationId: deleteChangeProposal
-      summary: Delete a specific change proposal within a milestone
-      description: Deletes a specific change proposal within a milestone
+      summary: Delete a specific change proposal
+      description: Deletes a specific change proposal
       tags:
         - ChangeProposals
       parameters:
-        - name: projectId
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
         - name: changeProposalId
           in: path
           required: true
@@ -1095,41 +1020,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Error"
-  /v1/projects/{projectId}/changeProposals/{changeProposalId}/tasks:
-    get:
-      operationId: listChangeProposalTasksPreview
-      summary: List of updated tasks that are affected by the change proposal
-      description: List of updated tasks that are affected by the change proposal
-      tags:
-        - ChangeProposals
-      parameters:
-        - name: projectId
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
-        - name: changeProposalId
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
-      responses:
-        "200":
-          description: List of affected tasks
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Task'
-        "default":
-          description: Invalid request was sent to the server
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+
   /v1/projects/{projectId}/connections:
     get:
       operationId: listTaskConnections

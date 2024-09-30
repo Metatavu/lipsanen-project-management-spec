@@ -1863,7 +1863,6 @@ components:
             format: uuid
         roles:
           description: User roles, can be empty or filled if includeRoles pameter is used. Defines the access level of the user.
-          readOnly: true
           type: array
           items:
             $ref: '#/components/schemas/UserRole'

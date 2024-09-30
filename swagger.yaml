@@ -511,7 +511,7 @@ paths:
     delete:
       operationId: deleteProjectMilestone
       summary: Delete a project milestone
-      description: Delete a project milestone
+      description: Delete a project milestone, cannot be deleted unless its tasks and dependencies are deleted first.
       tags:
         - ProjectMilestones
       parameters:

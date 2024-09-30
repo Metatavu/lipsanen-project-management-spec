@@ -1969,6 +1969,7 @@ components:
           minimum: 0
           maximum: 100
           description: Estimated readiness of the milestone
+          readOnly: true
         metadata:
           $ref: '#/components/schemas/Metadata'
 

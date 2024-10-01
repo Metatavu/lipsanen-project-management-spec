@@ -1368,12 +1368,6 @@ paths:
           schema:
             type: string
             format: uuid
-        - name: keycloakId
-          in: query
-          description: Keycloak user id
-          schema:
-            type: string
-            format: uuid
         - name: projectId
           in: query
           description: project id
@@ -1837,9 +1831,6 @@ components:
         - email
       properties:
         id:
-          type: string
-          format: uuid
-        keycloakId:
           type: string
           format: uuid
           readOnly: true

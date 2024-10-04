@@ -536,6 +536,183 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Error"
+  /v1/projects/{project}/attachments:
+    get:
+      operationId: listProjectAttachments
+      summary: Get all project attachments
+      description: Get all project attachments
+      tags:
+        - ProjectAttachments
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: taskId
+          in: query
+          required: false
+          schema:
+            type: string
+            format: uuid
+        - name: first
+          in: query
+          description: First result.
+          schema:
+            type: integer
+        - name: max
+          in: query
+          description: Max results.
+          schema:
+            type: integer
+    responses:
+      "200":
+        description: List of project attachments
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Attachment'
+      "default":
+        description: Invalid request was sent to the server
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Error"
+    post:
+      operationId: createProjectAttachment
+      summary: Create a new project attachment
+      description: Create a new project attachment
+      tags:
+        - ProjectAttachments
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+        application/json:
+          schema:
+          $ref: '#/components/schemas/Attachment'
+      responses:
+        "200":
+          description: Created project attachment
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Attachment'
+          "default":
+            description: Invalid request was sent to the server
+            content:
+              application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /v1/projects/{projectId}/attachments/{attachmentId}:
+    get:
+      operationId: findProjectAttachment
+      summary: Get a project attachment
+      description: Get a project attachment
+      tags:
+        - ProjectAttachments
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: attachmentId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: Project Attachment
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Attachment'
+        "default":
+          description: Invalid request was sent to the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    put:
+      operationId: updateProjectAttachment
+      summary: Update a project attachment
+      description: Update a project attachment
+      tags:
+        - ProjectAttachments
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: attachmentId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Attachment'
+    responses:
+      "200":
+        description: Updated
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Attachment'
+      "default":
+        description: Invalid request was sent to the server
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Error"
+    delete:
+      operationId: deleteProjectAttachment
+      summary: Delete a project attachment
+      description: Delete a project attachment
+      tags:
+        - ProjectAttachments
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: attachmentId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "204":
+          description: No content
+        "default":
+          description: Invalid request was sent to the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
   /v1/tasks:
     get:
       operationId: listTasks
@@ -2200,6 +2377,29 @@ components:
           description: IDs of users that the comment affects
         comment:
           type: string
+        metadata:
+          $ref: '#/components/schemas/Metadata'
+
+    Attachment:
+      type: object
+      description: Attachment object
+      required:
+        - projectId
+        - url
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        projectId:
+          type: string
+          format: uuid
+        taskId:
+          type: string
+          format: uuid
+        url:
+          type: string
+          format: url
         metadata:
           $ref: '#/components/schemas/Metadata'
 

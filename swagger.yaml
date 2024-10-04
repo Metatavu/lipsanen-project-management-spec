@@ -1819,6 +1819,14 @@ components:
           type: integer
         status:
           $ref: '#/components/schemas/ProjectStatus'
+        estimatedStartDate:
+          description: Estimated start date of the project, cannot be changed after the project has started
+          format: date
+          type: string
+        estimatedEndDate:
+          description: Estimated end date of the project, cannot be changed after the project has started
+          format: date
+          type: string
         metadata:
           $ref: '#/components/schemas/Metadata'
 

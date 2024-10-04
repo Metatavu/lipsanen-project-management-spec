@@ -2205,12 +2205,12 @@ components:
           minimum: 0
           maximum: 100
           description: Estimated readiness of the task
-        attachmentUrls:
+        attachmentIds:
           type: array
           items:
             type: string
-            format: url
-          description: URLs of attachments related to the task
+            format: uuid
+          description: ids of the task attachments
         metadata:
           $ref: '#/components/schemas/Metadata'
 

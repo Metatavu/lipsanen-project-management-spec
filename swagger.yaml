@@ -2402,6 +2402,9 @@ components:
         url:
           type: string
           format: url
+        type:
+          type: string
+          description: Type of the attachment
         metadata:
           $ref: '#/components/schemas/Metadata'
 

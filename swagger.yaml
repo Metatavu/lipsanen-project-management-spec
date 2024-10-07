@@ -590,9 +590,9 @@ paths:
       requestBody:
         required: true
         content:
-        application/json:
-          schema:
-          $ref: '#/components/schemas/Attachment'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Attachment'
       responses:
         "200":
           description: Created project attachment

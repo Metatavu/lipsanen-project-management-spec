@@ -566,15 +566,15 @@ paths:
           description: Max results.
           schema:
             type: integer
-    responses:
-      "200":
-        description: List of attachments
-        content:
-          application/json:
-            schema:
-              type: array
-              items:
-                $ref: '#/components/schemas/Attachment'
+      responses:
+        "200":
+          description: List of attachments
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Attachment'
       "default":
         description: Invalid request was sent to the server
         content:

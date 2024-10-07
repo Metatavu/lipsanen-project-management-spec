@@ -2362,6 +2362,7 @@ components:
       description: Attachment object
       required:
         - name
+        - type
         - projectId
         - url
       properties:

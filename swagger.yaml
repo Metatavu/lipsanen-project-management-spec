@@ -536,17 +536,17 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Error"
-  /v1/projects/{project}/attachments:
+  /v1/attachments:
     get:
-      operationId: listProjectAttachments
-      summary: Get all project attachments
-      description: Get all project attachments
+      operationId: listAttachments
+      summary: Get all attachments
+      description: Get all attachments
       tags:
-        - ProjectAttachments
+        - Attachments
       parameters:
         - name: projectId
-          in: path
-          required: true
+          in: query
+          required: false
           schema:
             type: string
             format: uuid
@@ -568,7 +568,7 @@ paths:
             type: integer
     responses:
       "200":
-        description: List of project attachments
+        description: List of attachments
         content:
           application/json:
             schema:
@@ -582,18 +582,11 @@ paths:
             schema:
               $ref: "#/components/schemas/Error"
     post:
-      operationId: createProjectAttachment
-      summary: Create a new project attachment
-      description: Create a new project attachment
+      operationId: createAttachment
+      summary: Create a new attachment
+      description: Create a new attachment
       tags:
-        - ProjectAttachments
-      parameters:
-        - name: projectId
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
+        - Attachments
       requestBody:
         required: true
         content:
@@ -615,18 +608,12 @@ paths:
                 $ref: "#/components/schemas/Error"
   /v1/projects/{projectId}/attachments/{attachmentId}:
     get:
-      operationId: findProjectAttachment
-      summary: Get a project attachment
-      description: Get a project attachment
+      operationId: findAttachment
+      summary: Get an attachment
+      description: Get an attachment
       tags:
-        - ProjectAttachments
+        - Attachments
       parameters:
-        - name: projectId
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
         - name: attachmentId
           in: path
           required: true
@@ -647,18 +634,12 @@ paths:
               schema:
                 $ref: "#/components/schemas/Error"
     put:
-      operationId: updateProjectAttachment
-      summary: Update a project attachment
-      description: Update a project attachment
+      operationId: updateAttachment
+      summary: Update an attachment
+      description: Update an attachment
       tags:
-        - ProjectAttachments
+        - Attachments
       parameters:
-        - name: projectId
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
         - name: attachmentId
           in: path
           required: true
@@ -685,18 +666,12 @@ paths:
             schema:
               $ref: "#/components/schemas/Error"
     delete:
-      operationId: deleteProjectAttachment
-      summary: Delete a project attachment
-      description: Delete a project attachment
+      operationId: deleteAttachment
+      summary: Delete an attachment
+      description: Delete an attachment
       tags:
-        - ProjectAttachments
+        - Attachments
       parameters:
-        - name: projectId
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
         - name: attachmentId
           in: path
           required: true
@@ -2386,6 +2361,7 @@ components:
       type: object
       description: Attachment object
       required:
+        - name
         - projectId
         - url
       properties:
@@ -2399,6 +2375,8 @@ components:
         taskId:
           type: string
           format: uuid
+        name:
+          type: string
         url:
           type: string
           format: url

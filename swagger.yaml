@@ -2276,26 +2276,18 @@ components:
       type: object
       description: Notification object that is created upon an event and sent to multiple users
       required:
-        - message
+        - notificationData
         - type
       properties:
         id:
           type: string
           format: uuid
           readOnly: true
-        message:
-          description: notification message
-          type: string
+        notificationData:
+          type: object
+          description: Additional data that is needed for the notification
         type:
           $ref: '#/components/schemas/NotificationType'
-        taskId:
-          description: ID of the subject entity of the notification if applicable, depends on the notification type
-          type: string
-          format: uuid
-        commentId:
-          description: ID of the comment entity of the notification if applicable, depends on the notification type
-          type: string
-          format: uuid
 
     NotificationEvent:
       type: object
@@ -2331,6 +2323,108 @@ components:
         - CHANGE_PROPOSAL_CREATED
         - CHANGE_PROPOSAL_STATUS_CHANGED
         - COMMENT_LEFT
+
+    TaskAssignedNotificationData:
+      type: object
+      description: Additional data for the TASK_ASSIGNED notification
+      required:
+        - taskId
+        - taskName
+      properties:
+        taskId:
+          description: ID of the task that was assigned
+          type: string
+          format: uuid
+        taskName:
+          description: Name of the task that was assigned
+          type: string
+
+    TaskStatusChangesNotificationData:
+      type: object
+      description: Additional data for the TASK_STATUS_CHANGED notification
+      required:
+        - taskId
+        - status
+        - taskName
+      properties:
+        taskId:
+          description: ID of the task that was updated
+          type: string
+          format: uuid
+        taskName:
+          description: Name of the task that was assigned
+          type: string
+        newStatus:
+          $ref: '#/components/schemas/TaskStatus'
+          description: New status of the task
+
+    ChangeProposalCreatedNotificationData:
+      type: object
+      description: Additional data for the CHANGE_PROPOSAL_CREATED notification
+      required:
+        - changeProposalId
+        - taskId
+        - taskName
+      properties:
+        changeProposalId:
+          description: ID of the change proposal that was created
+          type: string
+          format: uuid
+        taskId:
+          description: ID of the task that the change proposal is related to
+          type: string
+          format: uuid
+        taskName:
+          description: Name of the task that the change proposal is related to
+          type: string
+
+    ChangeProposalStatusChangedNotificationData:
+      type: object
+      description: Additional data for the CHANGE_PROPOSAL_STATUS_CHANGED notification
+      required:
+        - changeProposalId
+        - taskId
+        - taskName
+        - newStatus
+      properties:
+        changeProposalId:
+          description: ID of the change proposal that was updated
+          type: string
+          format: uuid
+        taskId:
+          description: ID of the task that the change proposal is related to
+          type: string
+          format: uuid
+        taskName:
+          description: Name of the task that the change proposal is related to
+          type: string
+        newStatus:
+          $ref: '#/components/schemas/ChangeProposalStatus'
+          description: New status of the change proposal
+
+    CommentLeftNotificationData:
+      type: object
+      description: Additional data for the COMMENT_LEFT notification
+      required:
+        - commentId
+        - taskId
+        - taskName
+        - comment
+      properties:
+        commentId:
+          description: ID of the comment that was left
+          type: string
+          format: uuid
+        taskId:
+          description: ID of the task that the comment is related to
+          type: string
+          format: uuid
+        taskName:
+          description: Name of the task that the comment is related to
+          type: string
+        comment:
+          description: The comment that was left
+          type: string
 
     TaskComment:
       type: object

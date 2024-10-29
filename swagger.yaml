@@ -2330,6 +2330,7 @@ components:
       required:
         - taskId
         - taskName
+        - assigneeIds
       properties:
         taskId:
           description: ID of the task that was assigned
@@ -2338,6 +2339,12 @@ components:
         taskName:
           description: Name of the task that was assigned
           type: string
+        assigneeIds:
+          type: array
+          items:
+            type: string
+            format: uuid
+          description: IDs of users that the task was assigned to
 
     TaskStatusChangesNotificationData:
       type: object

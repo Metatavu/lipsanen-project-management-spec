@@ -2171,10 +2171,6 @@ components:
           type: string
           format: uuid
           description: Job title suggested for the task
-        estimatedDuration:
-          type: number
-          format: float
-          description: Estimated duration of the task in days
         estimatedReadiness:
           type: integer
           format: int32

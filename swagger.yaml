@@ -1,0 +1,2507 @@
+openapi: 3.0.3
+info:
+  version: 1.0.0
+  title: Lipsanen Project Management API
+
+security:
+  - bearerAuth: []
+
+paths:
+  /v1/system/ping:
+    get:
+      operationId: ping
+      summary: Replies with pong
+      description: Replies ping with pong
+      tags:
+        - System
+      responses:
+        "200":
+          description: Pong
+          content:
+            text/plain:
+              schema:
+                type: string
+
+  /v1/projects/import:
+    post:
+      operationId: importXml
+      summary: Import XML file from Aikataulu
+      description: Import XML file from Aikataulu
+      tags:
+        - Projects
+      requestBody:
+        content:
+          application/xml:
+            schema:
+              type: string
+              format: binary
+      responses:
+        "200":
+          description: Imported project
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Project'
+        "default":
+          description: Invalid request was sent to the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /v1/projects:
+    get:
+      operationId: listProjects
+      summary: Get all projects
+      description: Get all projects
+      tags:
+        - Projects
+      parameters:
+        - name: first
+          in: query
+          description: First result.
+          schema:
+            type: integer
+        - name: max
+          in: query
+          description: Max results.
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: List of projects
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Project'
+        "default":
+          description: Invalid request was sent to the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    post:
+      operationId: createProject
+      summary: Create a new project
+      description: Create a new project
+      tags:
+        - Projects
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Project'
+      responses:
+        "200":
+          description: Created project
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Project'
+        "default":
+          description: Invalid request was sent to the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /v1/projects/{projectId}:
+    get:
+      operationId: findProject
+      summary: Get a project
+      description: Get a project
+      tags:
+        - Projects
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: Project
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Project'
+        "default":
+          description: Invalid request was sent to the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    put:
+      operationId: updateProject
+      summary: Update a project
+      description: Update a project
+      tags:
+        - Projects
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Project'
+      responses:
+        "200":
+          description: Updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Project'
+        "default":
+          description: Invalid request was sent to the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    delete:
+      operationId: deleteProject
+      summary: Delete a project
+      description: Delete a project
+      tags:
+        - Projects
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "204":
+          description: No content
+        "default":
+          description: Invalid request was sent to the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /v1/projects/{projectId}/export:
+    get:
+      operationId: exportProject
+      summary: Exports project to Tocoman xml file
+      description: Get a project
+      tags:
+        - Projects
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: Project
+          content:
+            application/xml:
+              schema:
+                type: string
+                format: binary
+        "default":
+          description: Invalid request was sent to the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /v1/projects/{projectId}/themes:
+    get:
+      operationId: listProjectThemes
+      summary: Get all projects themes
+      description: Get all projects themes, expected to be a list of 0 or 1 items
+      tags:
+        - ProjectThemes
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: List of Project Themes
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ProjectTheme'
+        "default":
+          description: Invalid request was sent to the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    post:
+      operationId: createProjectTheme
+      summary: Create a new Project Theme
+      description: Create a new Project Theme
+      tags:
+        - ProjectThemes
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProjectTheme'
+      responses:
+        "200":
+          description: Created Project Theme
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProjectTheme'
+        "default":
+          description: Invalid request was sent to the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /v1/projects/{projectId}/themes/{themeId}:
+    get:
+      operationId: findProjectTheme
+      summary: Get a project theme
+      description: Get a project theme
+      tags:
+        - ProjectThemes
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: themeId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: ProjectTheme
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProjectTheme'
+        "default":
+          description: Invalid request was sent to the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    put:
+      operationId: updateProjectTheme
+      summary: Update a project theme
+      description: Update a project theme
+      tags:
+        - ProjectThemes
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: themeId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProjectTheme'
+      responses:
+        "200":
+          description: Updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProjectTheme'
+        "default":
+          description: Invalid request was sent to the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    delete:
+      operationId: deleteProjectTheme
+      summary: Delete a project theme
+      description: Delete a project theme
+      tags:
+        - ProjectThemes
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: themeId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "204":
+          description: No content
+        "default":
+          description: Invalid request was sent to the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /v1/projects/{projectId}/milestones:
+    get:
+      operationId: listProjectMilestones
+      summary: Get all project milestones
+      description: Get all project milestones
+      tags:
+        - ProjectMilestones
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: List of project milestones
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Milestone'
+        "default":
+          description: Invalid request was sent to the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    post:
+      operationId: createProjectMilestone
+      summary: Create a new project milestone
+      description: Create a new project milestone
+      tags:
+        - ProjectMilestones
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Milestone'
+      responses:
+        "200":
+          description: Created project milestone
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Milestone'
+        "default":
+          description: Invalid request was sent to the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /v1/projects/{projectId}/milestones/{milestoneId}:
+    get:
+      operationId: findProjectMilestone
+      summary: Get a project milestone
+      description: Get a project milestone
+      tags:
+        - ProjectMilestones
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: milestoneId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: Project Milestone
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Milestone'
+        "default":
+          description: Invalid request was sent to the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    put:
+      operationId: updateProjectMilestone
+      summary: Update a project milestone
+      description: Update a project milestone
+      tags:
+        - ProjectMilestones
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: milestoneId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Milestone'
+      responses:
+        "200":
+          description: Updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Milestone'
+        "default":
+          description: Invalid request was sent to the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    delete:
+      operationId: deleteProjectMilestone
+      summary: Delete a project milestone
+      description: Delete a project milestone, cannot be deleted unless its tasks and dependencies are deleted first.
+      tags:
+        - ProjectMilestones
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: milestoneId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "204":
+          description: No content
+        "default":
+          description: Invalid request was sent to the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /v1/attachments:
+    get:
+      operationId: listAttachments
+      summary: Get all attachments
+      description: Get all attachments
+      tags:
+        - Attachments
+      parameters:
+        - name: projectId
+          in: query
+          required: false
+          schema:
+            type: string
+            format: uuid
+        - name: taskId
+          in: query
+          required: false
+          schema:
+            type: string
+            format: uuid
+        - name: first
+          in: query
+          description: First result.
+          schema:
+            type: integer
+        - name: max
+          in: query
+          description: Max results.
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: List of attachments
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Attachment'
+        "default":
+          description: Invalid request was sent to the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    post:
+      operationId: createAttachment
+      summary: Create a new attachment
+      description: Create a new attachment
+      tags:
+        - Attachments
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Attachment'
+      responses:
+        "200":
+          description: Created project attachment
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Attachment'
+        "default":
+          description: Invalid request was sent to the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /v1/attachments/{attachmentId}:
+    get:
+      operationId: findAttachment
+      summary: Get an attachment
+      description: Get an attachment
+      tags:
+        - Attachments
+      parameters:
+        - name: attachmentId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: Attachment
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Attachment'
+        "default":
+          description: Invalid request was sent to the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    put:
+      operationId: updateAttachment
+      summary: Update an attachment
+      description: Update an attachment
+      tags:
+        - Attachments
+      parameters:
+        - name: attachmentId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Attachment'
+      responses:
+        "200":
+          description: Updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Attachment'
+        "default":
+          description: Invalid request was sent to the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    delete:
+      operationId: deleteAttachment
+      summary: Delete an attachment
+      description: Delete an attachment
+      tags:
+        - Attachments
+      parameters:
+        - name: attachmentId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "204":
+          description: No content
+        "default":
+          description: Invalid request was sent to the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /v1/tasks:
+    get:
+      operationId: listTasks
+      summary: Get all tasks
+      description: Get all tasks
+      tags:
+        - Tasks
+      parameters:
+        - name: projectId
+          in: query
+          description: Lists the tasks within the project.
+          schema:
+            type: string
+            format: uuid
+        - name: changeProposalId
+          in: query
+          description: Lists the tasks that will be affected by the change proposal. Cannot be used with other parameters
+          schema:
+            type: string
+            format: uuid
+        - name: milestoneId
+          description: Lists the tasks within the milestone.
+          in: query
+          schema:
+            type: string
+            format: uuid
+        - name: first
+          in: query
+          description: First result.
+          schema:
+            type: integer
+        - name: max
+          in: query
+          description: Max results.
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: List of project milestone tasks
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Task'
+        "default":
+          description: Invalid request was sent to the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    post:
+      operationId: createTask
+      summary: Create a new task
+      description: Create a new task
+      tags:
+        - Tasks
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Task'
+      responses:
+        "200":
+          description: Created milestone task
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Task'
+        "default":
+          description: Invalid request was sent to the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /v1/tasks/{taskId}:
+    get:
+      operationId: findTask
+      summary: Get a task
+      description: Get a task
+      tags:
+        - Tasks
+      parameters:
+        - name: taskId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: Milestone Task
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Task'
+        "default":
+          description: Invalid request was sent to the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    put:
+      operationId: updateTask
+      summary: Update a task
+      description: Update a task
+      tags:
+        - Tasks
+      parameters:
+        - name: taskId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Task'
+      responses:
+        "200":
+          description: Updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Task'
+        "default":
+          description: Invalid request was sent to the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    delete:
+      operationId: deleteTask
+      summary: Delete a task
+      description: Delete a task
+      tags:
+        - Tasks
+      parameters:
+        - name: taskId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "204":
+          description: No content
+        "default":
+          description: Invalid request was sent to the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /v1/tasks/{taskId}/comments:
+    get:
+      operationId: listTaskComments
+      summary: List comments within a task
+      description: Lists comments within a task. Comments are sorted from earliest to latest created.
+      tags:
+        - TaskComments
+      parameters:
+        - name: taskId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: first
+          in: query
+          description: First result.
+          schema:
+            type: integer
+        - name: max
+          in: query
+          description: Max results.
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: List of comments
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TaskComment'
+        "default":
+          description: Invalid request was sent to the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    post:
+      operationId: createTaskComment
+      summary: Create a new comment within a task
+      description: Create a new comment within a task
+      tags:
+        - TaskComments
+      parameters:
+        - name: taskId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TaskComment'
+      responses:
+        "200":
+          description: Created comment
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TaskComment'
+        "default":
+          description: Invalid request was sent to the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /v1/tasks/{taskId}/comments/{commentId}:
+    get:
+      operationId: findTaskComment
+      summary: Find a specific comment within a task
+      description: Find a specific comment within a task
+      tags:
+        - TaskComments
+      parameters:
+        - name: taskId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: commentId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: Found comment
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TaskComment'
+        "default":
+          description: Invalid request was sent to the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    put:
+      operationId: updateTaskComment
+      summary: Update a specific comment within a task
+      description: Update a specific comment within a task
+      tags:
+        - TaskComments
+      parameters:
+        - name: taskId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: commentId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TaskComment'
+      responses:
+        "200":
+          description: Updated comment
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TaskComment'
+        "default":
+          description: Invalid request was sent to the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    delete:
+      operationId: deleteTaskComment
+      summary: Delete a specific comment within a task
+      description: Deletes a specific comment within a task
+      tags:
+        - TaskComments
+      parameters:
+        - name: taskId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: commentId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "204":
+          description: Comment deleted successfully
+        "default":
+          description: Invalid request was sent to the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /v1/changeProposals:
+    get:
+      operationId: listChangeProposals
+      summary: List change proposals
+      description: Lists change proposals. Proposals are sorted from earliest to latest created.
+      tags:
+        - ChangeProposals
+      parameters:
+        - name: projectId
+          in: query
+          schema:
+            type: string
+            format: uuid
+        - name: milestoneId
+          in: query
+          description: Cannot be used without projectId
+          schema:
+            type: string
+            format: uuid
+        - name: taskId
+          in: query
+          description: Cannot be used without projectId
+          schema:
+            type: string
+            format: uuid
+        - name: first
+          in: query
+          description: First result.
+          schema:
+            type: integer
+        - name: max
+          in: query
+          description: Max results.
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: List of change proposals
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ChangeProposal'
+        "default":
+          description: Invalid request was sent to the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    post:
+      operationId: createChangeProposal
+      summary: Create a new change proposal
+      description: Create a new change proposal
+      tags:
+        - ChangeProposals
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChangeProposal'
+      responses:
+        "200":
+          description: Created change proposal
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChangeProposal'
+        "default":
+          description: Invalid request was sent to the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /v1/changeProposals/{changeProposalId}:
+    get:
+      operationId: findChangeProposal
+      summary: Find a specific change proposal
+      description: Find a specific change proposal
+      tags:
+        - ChangeProposals
+      parameters:
+        - name: changeProposalId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: Found change proposal
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChangeProposal'
+        "default":
+          description: Invalid request was sent to the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    put:
+      operationId: updateChangeProposal
+      summary: Update a specific change proposal
+      description: Update a specific change proposal
+      tags:
+        - ChangeProposals
+      parameters:
+        - name: changeProposalId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChangeProposal'
+      responses:
+        "200":
+          description: Updated change proposal
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChangeProposal'
+        "default":
+          description: Invalid request was sent to the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    delete:
+      operationId: deleteChangeProposal
+      summary: Delete a specific change proposal
+      description: Deletes a specific change proposal
+      tags:
+        - ChangeProposals
+      parameters:
+        - name: changeProposalId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "204":
+          description: Change proposal deleted successfully
+        "default":
+          description: Invalid request was sent to the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /v1/projects/{projectId}/connections:
+    get:
+      operationId: listTaskConnections
+      summary: Get all task connections
+      description: Get all task connections
+      tags:
+        - TaskConnections
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: taskId
+          in: query
+          required: false
+          schema:
+            type: string
+            format: uuid
+        - name: connectionRole
+          in: query
+          required: false
+          schema:
+            $ref: '#/components/schemas/TaskConnectionRole'
+      responses:
+        "200":
+          description: List of task connections
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TaskConnection'
+        "default":
+          description: Invalid request was sent to the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    post:
+      operationId: createTaskConnection
+      summary: Create a new task connection
+      description: Create a new task connection
+      tags:
+        - TaskConnections
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TaskConnection'
+      responses:
+        "200":
+          description: Created task connection
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TaskConnection'
+        "default":
+          description: Invalid request was sent to the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /v1/projects/{projectId}/connections/{connectionId}:
+    get:
+      operationId: findTaskConnection
+      summary: Get a task connection
+      description: Get a task connection
+      tags:
+        - TaskConnections
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: connectionId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: Task Connection
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TaskConnection'
+        "default":
+          description: Invalid request was sent to the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    put:
+      operationId: updateTaskConnection
+      summary: Update a milestone task
+      description: Update a milestone task
+      tags:
+        - TaskConnections
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: connectionId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TaskConnection'
+      responses:
+        "200":
+          description: Updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TaskConnection'
+        "default":
+          description: Invalid request was sent to the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    delete:
+      operationId: deleteTaskConnection
+      summary: Delete a task connection
+      description: Delete a task connection
+      tags:
+        - TaskConnections
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: connectionId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "204":
+          description: No content
+        "default":
+          description: Invalid request was sent to the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /v1/notifications/{notificationId}:
+    delete:
+      operationId: deleteNotification
+      summary: Delete a notification
+      description: Delete a notification, only for testing purposes.
+      tags:
+        - Notifications
+      parameters:
+        - name: notificationId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "204":
+          description: No content
+        "default":
+          description: Invalid request was sent to the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /v1/notificationEvents:
+    get:
+      operationId: listNotificationEvents
+      summary: Get all notification events
+      description: Get all notification events for a user
+      tags:
+        - NotificationEvents
+      parameters:
+        - name: userId
+          in: query
+          description: User id
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: projectId
+          in: query
+          required: false
+          schema:
+            type: string
+            format: uuid
+        - name: taskId
+          in: query
+          required: false
+          schema:
+            type: string
+            format: uuid
+        - name: first
+          in: query
+          description: First result.
+          schema:
+            type: integer
+        - name: max
+          in: query
+          description: Max results.
+          schema:
+            type: integer
+        - name: readStatus
+          in: query
+          description: Filter by read status
+          schema:
+            type: boolean
+      responses:
+        "200":
+          description: List of notification events
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/NotificationEvent'
+        "default":
+          description: Invalid request was sent to the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /v1/notificationEvents/{notificationEventId}:
+    get:
+      operationId: findNotificationEvent
+      summary: Get a notification event
+      description: Get a notification event
+      tags:
+        - NotificationEvents
+      parameters:
+        - name: notificationEventId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: Notification Event
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotificationEvent'
+        "default":
+          description: Invalid request was sent to the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    put:
+      operationId: updateNotificationEvent
+      summary: Update a notification event
+      description: Update a notification event
+      tags:
+        - NotificationEvents
+      parameters:
+        - name: notificationEventId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NotificationEvent'
+      responses:
+        "200":
+          description: Updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotificationEvent'
+        "default":
+          description: Invalid request was sent to the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    delete:
+      operationId: deleteNotificationEvent
+      summary: Delete a notification event
+      description: Delete a notification event
+      tags:
+        - NotificationEvents
+      parameters:
+        - name: notificationEventId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "204":
+          description: No content
+        "default":
+          description: Invalid request was sent to the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /v1/users:
+    get:
+      operationId: listUsers
+      summary: Get all users
+      description: Get all users
+      tags:
+        - Users
+      parameters:
+        - name: companyId
+          in: query
+          description: Company id
+          schema:
+            type: string
+            format: uuid
+        - name: projectId
+          in: query
+          description: project id
+          schema:
+            type: string
+            format: uuid
+        - name: jobPositionId
+          in: query
+          description: Job position id
+          schema:
+            type: string
+            format: uuid
+        - name: first
+          in: query
+          description: First result.
+          schema:
+            type: integer
+        - name: max
+          in: query
+          description: Max results.
+          schema:
+            type: integer
+        - name: includeRoles
+          in: query
+          description: Include roles in the resulting User objects, use only when necessary
+          schema:
+            type: boolean
+      responses:
+        "200":
+          description: List of users
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+        "default":
+          description: Invalid request was sent to the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    post:
+      operationId: createUser
+      summary: Create a new user
+      description: Create a new user
+      tags:
+        - Users
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        "200":
+          description: Created user
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        "default":
+          description: Invalid request was sent to the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /v1/users/{userId}:
+    get:
+      operationId: findUser
+      summary: Get a user
+      description: Get a user
+      tags:
+        - Users
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: includeRoles
+          in: query
+          description: Include roles in response
+          schema:
+            type: boolean
+      responses:
+        "200":
+          description: User
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        "default":
+          description: Invalid request was sent to the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    put:
+      operationId: updateUser
+      summary: Update a user
+      description: Update a user
+      tags:
+        - Users
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        "200":
+          description: Updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        "default":
+          description: Invalid request was sent to the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    delete:
+      operationId: deleteUser
+      summary: Delete a user
+      description: Delete a user
+      tags:
+        - Users
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "204":
+          description: No content
+        "default":
+          description: Invalid request was sent to the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /v1/companies:
+    get:
+      operationId: listCompanies
+      summary: Get all companies
+      description: Get all companies
+      tags:
+        - Companies
+      parameters:
+        - name: first
+          in: query
+          description: First result.
+          schema:
+            type: integer
+        - name: max
+          in: query
+          description: Max results.
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: List of companies
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Company'
+        "default":
+          description: Invalid request was sent to the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    post:
+      operationId: createCompany
+      summary: Create a new company
+      description: Create a new company
+      tags:
+        - Companies
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Company'
+      responses:
+        "200":
+          description: Created company
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Company'
+        "default":
+          description: Invalid request was sent to the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /v1/companies/{companyId}:
+    get:
+      operationId: findCompany
+      summary: Get a company
+      description: Get a company
+      tags:
+        - Companies
+      parameters:
+        - name: companyId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: Company
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Company'
+        "default":
+          description: Invalid request was sent to the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    delete:
+      operationId: deleteCompany
+      summary: Delete a company
+      description: Delete a company
+      tags:
+        - Companies
+      parameters:
+        - name: companyId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "204":
+          description: No content
+        "default":
+          description: Invalid request was sent to the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /v1/jobPositions:
+    get:
+      operationId: listJobPositions
+      summary: Get all jobPositions
+      description: Get all jobPositions, sorted alphabetically
+      tags:
+        - JobPositions
+      parameters:
+        - name: first
+          in: query
+          description: First result.
+          schema:
+            type: integer
+        - name: max
+          in: query
+          description: Max results.
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: List of jobPositions
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/JobPosition'
+        "default":
+          description: Invalid request was sent to the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    post:
+      operationId: createJobPosition
+      summary: Create a new position
+      description: Create a new position
+      tags:
+        - JobPositions
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/JobPosition'
+      responses:
+        "200":
+          description: Created position
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobPosition'
+        "default":
+          description: Invalid request was sent to the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /v1/jobPositions/{positionId}:
+    get:
+      operationId: findJobPosition
+      summary: Get a position
+      description: Get a position
+      tags:
+        - JobPositions
+      parameters:
+        - name: positionId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: JobPosition
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobPosition'
+        "default":
+          description: Invalid request was sent to the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    put:
+      operationId: updateJobPosition
+      summary: Update a position
+      description: Update a position
+      tags:
+        - JobPositions
+      parameters:
+        - name: positionId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/JobPosition'
+      responses:
+        "200":
+          description: Updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobPosition'
+        "default":
+          description: Invalid request was sent to the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    delete:
+      operationId: deleteJobPosition
+      summary: Delete a position
+      description: Delete a position
+      tags:
+        - JobPositions
+      parameters:
+        - name: positionId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "204":
+          description: No content
+        "default":
+          description: Invalid request was sent to the server
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  schemas:
+    Error:
+      type: object
+      description: Error object
+      required:
+        - code
+        - message
+      properties:
+        status:
+          type: integer
+          format: int32
+        message:
+          type: string
+
+    ProjectStatus:
+      type: string
+      description: Project status
+      enum:
+        - INITIATION
+        - PLANNING
+        - DESIGN
+        - PROCUREMENT
+        - CONSTRUCTION
+        - INSPECTION
+        - COMPLETION
+
+    Project:
+      type: object
+      description: Project object
+      required:
+        - name
+        - status
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        tocomanId:
+          type: integer
+        status:
+          $ref: '#/components/schemas/ProjectStatus'
+        estimatedStartDate:
+          description: Estimated start date of the project
+          format: date
+          type: string
+        estimatedEndDate:
+          description: Estimated end date of the project
+          format: date
+          type: string
+        metadata:
+          $ref: '#/components/schemas/Metadata'
+
+    User:
+      type: object
+      description: User object
+      required:
+        - firstName
+        - lastName
+        - email
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        firstName:
+          type: string
+        lastName:
+          type: string
+        email:
+          type: string
+        companyId:
+          format: uuid
+          type: string
+        lastLoggedIn:
+          format: date-time
+          type: string
+        projectIds:
+          description: List of project ids that the user belongs to
+          type: array
+          items:
+            type: string
+            format: uuid
+        roles:
+          description: User roles, can be empty or filled if includeRoles pameter is used. Defines the access level of the user.
+          type: array
+          items:
+            $ref: '#/components/schemas/UserRole'
+        jobPositionId:
+          description: Job position that the user has
+          type: string
+          format: uuid
+
+    JobPosition:
+      type: object
+      description: User's position in the company
+      required:
+        - name
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        name:
+          type: string
+        color:
+          type: string
+        iconName:
+          type: string
+        metadata:
+          $ref: '#/components/schemas/Metadata'
+
+    UserRole:
+      type: string
+      description: Access role of the user
+      enum:
+        - ADMIN
+        - USER
+        - PROJECT_OWNER
+
+    Company:
+      type: object
+      description: Company object
+      required:
+        - name
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        metadata:
+          $ref: '#/components/schemas/Metadata'
+
+    ProjectTheme:
+      type: object
+      description: Theme object
+      required:
+        - themeColor
+        - logoUrl
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        themeColor:
+          type: string
+          description: Theme color code
+        logoUrl:
+          type: string
+          format: url
+        metadata:
+          $ref: '#/components/schemas/Metadata'
+
+    Milestone:
+      type: object
+      description: milestone
+      required:
+        - name
+        - startDate
+        - endDate
+        - originalStartDate
+        - originalEndDate
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        name:
+          type: string
+        startDate:
+          format: date
+          type: string
+        endDate:
+          format: date
+          type: string
+        originalStartDate:
+          format: date
+          type: string
+          description: Original start date of the milestone
+        originalEndDate:
+          format: date
+          type: string
+          description: Original end date of the milestone
+        estimatedReadiness:
+          type: integer
+          format: int32
+          minimum: 0
+          maximum: 100
+          description: Estimated readiness of the milestone
+          readOnly: true
+        metadata:
+          $ref: '#/components/schemas/Metadata'
+
+    Task:
+      type: object
+      description: milestone
+      required:
+        - name
+        - startDate
+        - endDate
+        - milestoneId
+        - status
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        name:
+          type: string
+        startDate:
+          format: date
+          type: string
+          description: Can be edited only within proposal OR in project planning stage by admin
+        endDate:
+          format: date
+          type: string
+          description: Can be edited only within proposal OR in project planning stage by admin
+        milestoneId:
+          type: string
+          format: uuid
+        status:
+          $ref: '#/components/schemas/TaskStatus'
+          description: Task status. TaskConnections is taken into account when updating the status
+        assigneeIds:
+          type: array
+          items:
+            type: string
+            format: uuid
+          description: List of assignee user IDs
+        dependentUserId:
+          type: string
+          format: uuid
+          description: ID of the user who is dependent on this task
+        userRole:
+          $ref: '#/components/schemas/UserRole'
+          description: User role suggested for the task
+        jobPositionId:
+          type: string
+          format: uuid
+          description: Job title suggested for the task
+        estimatedReadiness:
+          type: integer
+          format: int32
+          minimum: 0
+          maximum: 100
+          description: Estimated readiness of the task
+        metadata:
+          $ref: '#/components/schemas/Metadata'
+
+    TaskStatus:
+      type: string
+      description: Task status
+      enum:
+        - NOT_STARTED
+        - IN_PROGRESS
+        - DONE
+
+    ChangeProposal:
+      type: object
+      description: Change proposal
+      required:
+        - status
+        - taskId
+        - reason
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        taskId:
+          type: string
+          format: uuid
+        startDate:
+          description: Null if change is not needed and not null if the start date is proposed to change
+          format: date
+          type: string
+        endDate:
+          description: Null if change is not needed and not null if the end date is proposed to change
+          format: date
+          type: string
+        reason:
+          type: string
+          description: The reason for the proposed change
+        comment:
+          type: string
+          description: Additional comments or details about the proposed change
+        status:
+          $ref: '#/components/schemas/ChangeProposalStatus'
+          description: Status of the change proposal
+        metadata:
+          $ref: '#/components/schemas/Metadata'
+
+    ChangeProposalStatus:
+      type: string
+      description: Change proposal status
+      enum:
+        - PENDING
+        - APPROVED
+        - REJECTED
+
+
+    TaskConnection:
+      type: object
+      description: Task connection
+      required:
+        - sourceTaskId
+        - targetTaskId
+        - type
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        sourceTaskId:
+          type: string
+          format: uuid
+        targetTaskId:
+          type: string
+          format: uuid
+        type:
+          $ref: '#/components/schemas/TaskConnectionType'
+
+    TaskConnectionRole:
+      type: string
+      description: Role of the task in the connection
+      enum:
+        - SOURCE
+        - TARGET
+
+    TaskConnectionType:
+      type: string
+      description: Task connection type
+      enum:
+        - FINISH_TO_START
+        - START_TO_START
+        - FINISH_TO_FINISH
+
+    Notification:
+      type: object
+      description: Notification object that is created upon an event and sent to multiple users
+      required:
+        - notificationData
+        - type
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        notificationData:
+          type: object
+          description: Additional data that is needed for the notification
+        type:
+          $ref: '#/components/schemas/NotificationType'
+
+    NotificationEvent:
+      type: object
+      description: Received notification by a user
+      required:
+        - notification
+        - receiverId
+        - read
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        notification:
+          description: Full notification object
+          $ref: '#/components/schemas/Notification'
+        receiverId:
+          description: User ID that the notification was sent to
+          type: string
+          format: uuid
+        read:
+          description: Whether the notification has been read
+          type: boolean
+        metadata:
+          $ref: '#/components/schemas/Metadata'
+
+    NotificationType:
+      type: string
+      description: Notification type
+      enum:
+        - TASK_ASSIGNED
+        - TASK_STATUS_CHANGED
+        - CHANGE_PROPOSAL_CREATED
+        - CHANGE_PROPOSAL_STATUS_CHANGED
+        - COMMENT_LEFT
+
+    TaskAssignedNotificationData:
+      type: object
+      description: Additional data for the TASK_ASSIGNED notification
+      required:
+        - taskId
+        - taskName
+        - assigneeIds
+      properties:
+        taskId:
+          description: ID of the task that was assigned
+          type: string
+          format: uuid
+        taskName:
+          description: Name of the task that was assigned
+          type: string
+        assigneeIds:
+          type: array
+          items:
+            type: string
+            format: uuid
+          description: IDs of users that the task was assigned to
+
+    TaskStatusChangesNotificationData:
+      type: object
+      description: Additional data for the TASK_STATUS_CHANGED notification
+      required:
+        - taskId
+        - status
+        - taskName
+      properties:
+        taskId:
+          description: ID of the task that was updated
+          type: string
+          format: uuid
+        taskName:
+          description: Name of the task that was assigned
+          type: string
+        newStatus:
+          $ref: '#/components/schemas/TaskStatus'
+          description: New status of the task
+
+    ChangeProposalCreatedNotificationData:
+      type: object
+      description: Additional data for the CHANGE_PROPOSAL_CREATED notification
+      required:
+        - changeProposalId
+        - taskId
+        - taskName
+      properties:
+        changeProposalId:
+          description: ID of the change proposal that was created
+          type: string
+          format: uuid
+        taskId:
+          description: ID of the task that the change proposal is related to
+          type: string
+          format: uuid
+        taskName:
+          description: Name of the task that the change proposal is related to
+          type: string
+
+    ChangeProposalStatusChangedNotificationData:
+      type: object
+      description: Additional data for the CHANGE_PROPOSAL_STATUS_CHANGED notification
+      required:
+        - changeProposalId
+        - taskId
+        - taskName
+        - newStatus
+      properties:
+        changeProposalId:
+          description: ID of the change proposal that was updated
+          type: string
+          format: uuid
+        taskId:
+          description: ID of the task that the change proposal is related to
+          type: string
+          format: uuid
+        taskName:
+          description: Name of the task that the change proposal is related to
+          type: string
+        newStatus:
+          $ref: '#/components/schemas/ChangeProposalStatus'
+          description: New status of the change proposal
+
+    CommentLeftNotificationData:
+      type: object
+      description: Additional data for the COMMENT_LEFT notification
+      required:
+        - commentId
+        - taskId
+        - taskName
+        - comment
+      properties:
+        commentId:
+          description: ID of the comment that was left
+          type: string
+          format: uuid
+        taskId:
+          description: ID of the task that the comment is related to
+          type: string
+          format: uuid
+        taskName:
+          description: Name of the task that the comment is related to
+          type: string
+        comment:
+          description: The comment that was left
+          type: string
+
+    TaskComment:
+      type: object
+      description: Task comment
+      required:
+        - taskId
+        - comment
+        - referencedUsers
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        taskId:
+          type: string
+          format: uuid
+        referencedUsers:
+          type: array
+          items:
+            type: string
+            format: uuid
+          description: IDs of users that the comment affects
+        comment:
+          type: string
+        metadata:
+          $ref: '#/components/schemas/Metadata'
+
+    Attachment:
+      type: object
+      description: Attachment object
+      required:
+        - name
+        - type
+        - projectId
+        - url
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        projectId:
+          type: string
+          format: uuid
+        taskId:
+          type: string
+          format: uuid
+        name:
+          type: string
+        url:
+          type: string
+          format: url
+        type:
+          type: string
+          description: Type of the attachment
+        metadata:
+          $ref: '#/components/schemas/Metadata'
+
+    Metadata:
+      type: object
+      description: Error object
+      properties:
+        creatorId:
+          type: string
+          readOnly: true
+          format: uuid
+        createdAt:
+          format: date-time
+          type: string
+          readOnly: true
+        lastModifierId:
+          type: string
+          readOnly: true
+          format: uuid
+        modifiedAt:
+          format: date-time
+          type: string
+          readOnly: true

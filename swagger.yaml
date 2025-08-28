@@ -2231,7 +2231,6 @@ components:
         - APPROVED
         - REJECTED
 
-
     TaskConnection:
       type: object
       description: Task connection
@@ -2335,6 +2334,20 @@ components:
         taskName:
           description: Name of the task that was assigned
           type: string
+        milestoneId:
+          description: ID of the milestone that the comment is related to
+          type: string
+          format: uuid
+        milestoneName:
+          description: Name of the milestone that the comment is related to
+          type: string
+        projectId:
+          description: ID of the project that the comment is related to
+          type: string
+          format: uuid
+        projectName:
+          description: Name of the project that the comment is related to
+          type: string
         assigneeIds:
           type: array
           items:
@@ -2356,6 +2369,20 @@ components:
           format: uuid
         taskName:
           description: Name of the task that was assigned
+          type: string
+        milestoneId:
+          description: ID of the milestone that the comment is related to
+          type: string
+          format: uuid
+        milestoneName:
+          description: Name of the milestone that the comment is related to
+          type: string
+        projectId:
+          description: ID of the project that the comment is related to
+          type: string
+          format: uuid
+        projectName:
+          description: Name of the project that the comment is related to
           type: string
         newStatus:
           $ref: '#/components/schemas/TaskStatus'
@@ -2380,6 +2407,20 @@ components:
         taskName:
           description: Name of the task that the change proposal is related to
           type: string
+        milestoneId:
+          description: ID of the milestone that the comment is related to
+          type: string
+          format: uuid
+        milestoneName:
+          description: Name of the milestone that the comment is related to
+          type: string
+        projectId:
+          description: ID of the project that the comment is related to
+          type: string
+          format: uuid
+        projectName:
+          description: Name of the project that the comment is related to
+          type: string
 
     ChangeProposalStatusChangedNotificationData:
       type: object
@@ -2400,6 +2441,20 @@ components:
           format: uuid
         taskName:
           description: Name of the task that the change proposal is related to
+          type: string
+        milestoneId:
+          description: ID of the milestone that the comment is related to
+          type: string
+          format: uuid
+        milestoneName:
+          description: Name of the milestone that the comment is related to
+          type: string
+        projectId:
+          description: ID of the project that the comment is related to
+          type: string
+          format: uuid
+        projectName:
+          description: Name of the project that the comment is related to
           type: string
         newStatus:
           $ref: '#/components/schemas/ChangeProposalStatus'
@@ -2425,6 +2480,20 @@ components:
         taskName:
           description: Name of the task that the comment is related to
           type: string
+        milestoneId:
+          description: ID of the milestone that the comment is related to
+          type: string
+          format: uuid
+        milestoneName:
+          description: Name of the milestone that the comment is related to
+          type: string
+        projectId:
+          description: ID of the project that the comment is related to
+          type: string
+          format: uuid
+        projectName:
+          description: Name of the project that the comment is related to
+          type: string
         comment:
           description: The comment that was left
           type: string
@@ -2444,6 +2513,20 @@ components:
         taskId:
           type: string
           format: uuid
+        milestoneId:
+          description: ID of the milestone that the comment is related to
+          type: string
+          format: uuid
+        milestoneName:
+          description: Name of the milestone that the comment is related to
+          type: string
+        projectId:
+          description: ID of the project that the comment is related to
+          type: string
+          format: uuid
+        projectName:
+          description: Name of the project that the comment is related to
+          type: string
         referencedUsers:
           type: array
           items:

@@ -2325,6 +2325,10 @@ components:
       required:
         - taskId
         - taskName
+        - milestoneId
+        - milestoneName
+        - projectId
+        - projectName
         - assigneeIds
       properties:
         taskId:

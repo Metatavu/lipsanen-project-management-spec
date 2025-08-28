@@ -2523,11 +2523,6 @@ components:
       description: Task comment
       required:
         - taskId
-        - taskName
-        - milestoneId
-        - milestoneName
-        - projectId
-        - projectName
         - comment
         - referencedUsers
       properties:
@@ -2538,23 +2533,6 @@ components:
         taskId:
           type: string
           format: uuid
-        taskName:
-          type: string
-          description: Name of the task that the comment is related to
-        milestoneId:
-          description: ID of the milestone that the comment is related to
-          type: string
-          format: uuid
-        milestoneName:
-          description: Name of the milestone that the comment is related to
-          type: string
-        projectId:
-          description: ID of the project that the comment is related to
-          type: string
-          format: uuid
-        projectName:
-          description: Name of the project that the comment is related to
-          type: string
         referencedUsers:
           type: array
           items:

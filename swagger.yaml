@@ -2360,8 +2360,12 @@ components:
       description: Additional data for the TASK_STATUS_CHANGED notification
       required:
         - taskId
-        - status
         - taskName
+        - milestoneId
+        - milestoneName
+        - projectId
+        - projectName
+        - status
       properties:
         taskId:
           description: ID of the task that was updated
@@ -2395,6 +2399,10 @@ components:
         - changeProposalId
         - taskId
         - taskName
+        - milestoneId
+        - milestoneName
+        - projectId
+        - projectName
       properties:
         changeProposalId:
           description: ID of the change proposal that was created
@@ -2429,6 +2437,10 @@ components:
         - changeProposalId
         - taskId
         - taskName
+        - milestoneId
+        - milestoneName
+        - projectId
+        - projectName
         - newStatus
       properties:
         changeProposalId:
@@ -2467,6 +2479,10 @@ components:
         - commentId
         - taskId
         - taskName
+        - milestoneId
+        - milestoneName
+        - projectId
+        - projectName
         - comment
       properties:
         commentId:
@@ -2503,6 +2519,11 @@ components:
       description: Task comment
       required:
         - taskId
+        - taskName
+        - milestoneId
+        - milestoneName
+        - projectId
+        - projectName
         - comment
         - referencedUsers
       properties:
@@ -2513,6 +2534,9 @@ components:
         taskId:
           type: string
           format: uuid
+        taskName:
+          type: string
+          description: Name of the task that the comment is related to
         milestoneId:
           description: ID of the milestone that the comment is related to
           type: string
